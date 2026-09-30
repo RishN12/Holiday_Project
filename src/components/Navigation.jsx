@@ -20,8 +20,8 @@ export function Header({ onOpenQR }) {
   return (
     <header className="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-4 py-3 flex items-center justify-between shadow-md">
       <div className="flex items-center gap-2.5">
-        <div className="bg-gradient-to-tr from-sky-500 to-amber-500 p-2 rounded-xl text-slate-950 font-bold shadow-lg shadow-sky-500/20">
-          🚀
+        <div className="h-10 w-10 overflow-hidden rounded-xl border border-slate-700/80 bg-slate-950 shadow-lg shadow-cyan-500/10">
+          <img src="/logo-premium.png" alt="Orlando 2026 compass logo" className="h-full w-full object-cover" />
         </div>
         <div>
           <h1 className="text-base font-extrabold tracking-tight text-white flex items-center gap-1.5">
