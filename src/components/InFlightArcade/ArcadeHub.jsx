@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getStorageItem, setStorageItem } from '../../utils/storage';
 import SkyWingsGame from './SkyWingsGame';
 import OrbitLander from './OrbitLander';
 import FlightBrickBreaker from './FlightBrickBreaker';
@@ -9,6 +10,13 @@ import { Gamepad2, Rocket, Layers, Zap, Sparkles, BookOpen, Plane } from 'lucide
 
 export default function ArcadeHub() {
   const [subTab, setSubTab] = useState('game');
+  const [bestRun, setBestRun] = useState(() => getStorageItem('orlando_arcade_best_run', 0));
+  const [level, setLevel] = useState(() => getStorageItem('orlando_arcade_level', 1));
+
+  const selectLevel = (nextLevel) => {
+    setLevel(nextLevel);
+    setStorageItem('orlando_arcade_level', nextLevel);
+  };
 
   const tabs = [
     { id: 'game', label: 'Pilot Dodge', icon: Gamepad2 },
@@ -22,7 +30,8 @@ export default function ArcadeHub() {
   return (
     <div className="pb-24 pt-2 px-4 max-w-md mx-auto animate-fadeIn">
       {/* Title Banner */}
-      <div className="bg-gradient-to-r from-amber-500/20 via-sky-500/20 to-indigo-500/20 border border-amber-500/30 rounded-3xl p-4 mb-3 flex items-center justify-between">
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#172554] via-[#0f172a] to-[#111827] border border-sky-400/20 rounded-[1.75rem] p-4 mb-3 shadow-[0_18px_45px_rgba(2,6,23,.35)] flex items-center justify-between">
+        <div className="absolute -right-8 -top-10 h-28 w-28 rounded-full bg-amber-300/10 blur-2xl" />
         <div>
           <span className="text-[10px] font-black text-amber-400 bg-amber-950/80 border border-amber-500/40 px-2 py-0.5 rounded-full uppercase tracking-wider inline-block mb-1">
             ✈️ 100% Offline Universal Flight Arcade
@@ -36,6 +45,20 @@ export default function ArcadeHub() {
         </div>
         <div className="bg-slate-900/90 border border-slate-700 p-3 rounded-2xl text-amber-400 shrink-0">
           <Plane className="w-6 h-6 animate-pulse" />
+        </div>
+      </div>
+
+      <div className="mb-3 rounded-2xl border border-white/10 bg-white/[.04] p-3">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-[10px] font-black uppercase tracking-[.16em] text-slate-400">Difficulty deck</span>
+          <span className="text-[10px] font-bold text-amber-300">Best run {bestRun}</span>
+        </div>
+        <div className="grid grid-cols-4 gap-2">
+          {[1, 2, 3, 4].map((item) => (
+            <button key={item} onClick={() => selectLevel(item)} className={`rounded-xl py-2 text-xs font-black transition ${level === item ? 'bg-amber-300 text-slate-950 shadow-lg shadow-amber-300/10' : 'bg-slate-900 text-slate-400 border border-white/10'}`} aria-label={`Select level ${item}`}>
+              L{item}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -64,7 +87,7 @@ export default function ArcadeHub() {
       {/* Tab Content rendering */}
       {subTab === 'game' && <SkyWingsGame />}
       {subTab === 'lander' && <OrbitLander />}
-      {subTab === 'breaker' && <FlightBrickBreaker />}
+      {subTab === 'breaker' && <FlightBrickBreaker level={level} />}
       {subTab === 'runner' && <JetpackRunner />}
       {subTab === 'bingo' && <FlightBingo />}
       {subTab === 'journal' && <FlightJournal />}

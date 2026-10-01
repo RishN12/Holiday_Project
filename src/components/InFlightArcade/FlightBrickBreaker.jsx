@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { getStorageItem, setStorageItem } from '../../utils/storage';
 import { Trophy, Play, RotateCcw, Zap, Layers } from 'lucide-react';
 
-export default function FlightBrickBreaker() {
+export default function FlightBrickBreaker({ level = 1 }) {
   const canvasRef = useRef(null);
   const [gameState, setGameState] = useState('start'); // 'start', 'playing', 'gameover', 'won'
   const [score, setScore] = useState(0);
@@ -24,7 +24,7 @@ export default function FlightBrickBreaker() {
   });
 
   const initBricks = () => {
-    const rows = 4;
+    const rows = Math.min(7, 3 + level);
     const cols = 6;
     const padding = 6;
     const brickWidth = (320 - 20 - (cols - 1) * padding) / cols;
@@ -58,8 +58,8 @@ export default function FlightBrickBreaker() {
       paddleW: 70,
       ballX: w / 2,
       ballY: h - 50,
-      ballVX: (Math.random() > 0.5 ? 1 : -1) * (2.5 + Math.random()),
-      ballVY: -4,
+      ballVX: (Math.random() > 0.5 ? 1 : -1) * (2.5 + Math.random() + level * 0.35),
+      ballVY: -(4 + level * 0.3),
       ballR: 6,
       lives: 3,
       score: 0,
