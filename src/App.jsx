@@ -13,7 +13,7 @@ export default function App() {
   const [isQrOpen, setIsQrOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-sky-500 selection:text-white">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top,#172554_0%,#0f172a_32%,#020617_72%)] text-slate-100 flex flex-col justify-between selection:bg-amber-300 selection:text-slate-950">
       {/* Header */}
       <Header onOpenQR={() => setIsQrOpen(true)} />
 
