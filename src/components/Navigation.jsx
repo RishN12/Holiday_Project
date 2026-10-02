@@ -18,8 +18,8 @@ export function Header({ onOpenQR }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 bg-slate-950/95 backdrop-blur-xl border-b border-white/[0.08] px-4 py-3 flex items-center justify-between shadow-[0_8px_24px_rgba(0,0,0,.22)]">
-      <div className="flex items-center gap-2.5">
+    <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--paper)]/95 px-4 py-3 backdrop-blur-xl">
+      <div className="flex items-center gap-3">
         <div className="h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-slate-700/80 bg-slate-950 p-1 shadow-lg shadow-cyan-500/10">
           <img src="/logo-premium-v3.png" alt="Orlando 2026 premium travel logo" className="h-full w-full object-contain" />
         </div>
@@ -46,7 +46,7 @@ export function Header({ onOpenQR }) {
 
       <button
         onClick={onOpenQR}
-        className="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-sky-400 border border-slate-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition active:scale-95 shadow-sm"
+        className="flex items-center gap-1.5 bg-[var(--surface)] hover:bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--line)] px-3 py-1.5 rounded-xl text-xs font-semibold transition active:scale-95 shadow-sm"
         title="Scan QR Code to test on Pixel 9a"
       >
         <QrCode className="w-4 h-4" />
@@ -67,7 +67,7 @@ export function BottomNav({ activeTab, setActiveTab }) {
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-xl border-t border-slate-800/90 px-1.5 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-[0_-12px_32px_rgba(2,6,23,0.45)]">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[var(--paper)]/95 backdrop-blur-xl border-t border-[var(--line)] px-1.5 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(20,26,25,.08)]">
       <div className="max-w-md mx-auto flex items-center justify-around">
         {navItems.map((item) => {
           const Icon = item.icon;

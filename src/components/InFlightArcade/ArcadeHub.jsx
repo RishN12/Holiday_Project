@@ -48,7 +48,7 @@ export default function ArcadeHub() {
   return (
     <div className="pb-28 pt-3 px-3 max-w-md mx-auto animate-fadeIn">
       <section className="arcade-hero relative overflow-hidden rounded-[1.5rem] p-4 mb-3 shadow-[0_18px_45px_rgba(0,0,0,.3)]">
-        <div className="absolute -right-16 -top-16 h-36 w-36 rounded-full bg-sky-300/10 blur-3xl" />
+        <div className="absolute -right-16 -top-16 h-36 w-36 rounded-full bg-white/5 blur-3xl" />
         <div className="relative flex items-start justify-between gap-3">
           <div>
             <span className="inline-flex items-center rounded-full border border-amber-300/30 bg-amber-300/10 px-2 py-1 text-[9px] font-black uppercase tracking-[.16em] text-amber-200">Offline arcade</span>

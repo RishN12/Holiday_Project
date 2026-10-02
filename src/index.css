@@ -29,20 +29,49 @@
   animation: fadeIn 0.25s ease-out forwards;
 }
 
+:root {
+  --ink: #1d2424;
+  --muted: #6c7470;
+  --paper: #f5f3ee;
+  --surface: #ffffff;
+  --line: #deded7;
+  --accent: #8a5a36;
+  --accent-soft: #eadbca;
+}
+
 .app-shell {
-  background:
-    linear-gradient(180deg, #11151b 0%, #090b0f 42%, #07090d 100%);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .app-shell main > * {
   animation: fadeIn 0.22s ease-out both;
 }
 
-@media (prefers-color-scheme: light) {
-  .app-shell {
-    background: linear-gradient(180deg, #f5f2ec 0%, #eeebe4 100%);
-  }
+/* A restrained charcoal palette keeps the app legible in the cabin and matches phone dark mode. */
+:root {
+  --ink: #f3f0e9;
+  --muted: #a7aaa4;
+  --paper: #101211;
+  --surface: #181b19;
+  --line: #30332f;
+  --accent: #c99a68;
+  --accent-soft: #33291f;
 }
+
+.app-shell { background: var(--paper); }
+
+.app-shell .bg-slate-950\/95,
+.app-shell .bg-slate-950 { background-color: #101211 !important; }
+.app-shell .bg-slate-900,
+.app-shell .bg-\[\#11151b\] { background-color: var(--surface) !important; }
+.app-shell .text-slate-100,
+.app-shell .text-white { color: var(--ink) !important; }
+.app-shell .text-slate-400,
+.app-shell .text-slate-500 { color: var(--muted) !important; }
+.app-shell .border-slate-800,
+.app-shell .border-slate-700 { border-color: var(--line) !important; }
+
 
 /* Safe area inset padding for modern mobile displays */
 body {
@@ -53,8 +82,10 @@ body {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile */
-  background-color: #07090d;
-  color: #f7f3ea;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-size: 15px;
+  letter-spacing: -0.01em;
 }
 
 /* Ensure canvas doesn't trigger scrolling */
@@ -80,17 +111,8 @@ button {
 }
 
 .arcade-hero {
-  background:
-    radial-gradient(circle at 88% 8%, rgba(125, 211, 252, .2), transparent 30%),
-    radial-gradient(circle at 12% 100%, rgba(245, 158, 11, .08), transparent 34%),
-    linear-gradient(145deg, #172554 0%, #0f172a 56%, #050814 100%);
-  border: 1px solid rgba(125, 211, 252, .22);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 12px 32px rgba(20, 26, 25, .06);
 }
 
-@media (prefers-color-scheme: light) {
-  .arcade-hero {
-    background:
-      radial-gradient(circle at 88% 8%, rgba(14, 165, 233, .2), transparent 30%),
-      linear-gradient(145deg, #172554 0%, #0f172a 100%);
-  }
-}
