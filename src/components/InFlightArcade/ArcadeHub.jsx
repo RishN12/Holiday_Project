@@ -47,41 +47,30 @@ export default function ArcadeHub() {
 
   return (
     <div className="pb-28 pt-3 px-3 max-w-md mx-auto animate-fadeIn">
-      {/* Title Banner */}
-      <div className="relative overflow-hidden bg-[radial-gradient(circle_at_100%_0%,rgba(56,189,248,.2),transparent_36%),linear-gradient(145deg,#172554_0%,#0b1224_58%,#050814_100%)] border border-sky-300/20 rounded-[1.75rem] p-4 mb-3 shadow-[0_20px_55px_rgba(2,6,23,.5)] flex items-center justify-between">
-        <div className="absolute -right-8 -top-10 h-28 w-28 rounded-full bg-amber-300/10 blur-2xl" />
-        <div>
-          <span className="text-[10px] font-black text-amber-400 bg-amber-950/80 border border-amber-500/40 px-2 py-0.5 rounded-full uppercase tracking-wider inline-block mb-1">
-            ✈️ 100% Offline Universal Flight Arcade
-          </span>
-          <h2 className="text-lg font-black text-white leading-tight">
-            In-Flight Boredom Buster
-          </h2>
-          <p className="text-[11px] text-slate-300">
-            Action arcade games for long flights anywhere!
-          </p>
+      <section className="arcade-hero relative overflow-hidden rounded-[1.75rem] p-4 mb-3 shadow-[0_22px_60px_rgba(2,6,23,.55)]">
+        <div className="absolute -right-12 -top-14 h-36 w-36 rounded-full bg-sky-300/15 blur-3xl" />
+        <div className="relative flex items-start justify-between gap-3">
+          <div>
+            <span className="inline-flex items-center rounded-full border border-amber-300/30 bg-amber-300/10 px-2 py-1 text-[9px] font-black uppercase tracking-[.16em] text-amber-200">Offline arcade</span>
+            <h2 className="mt-2 text-[22px] font-black leading-[1.05] tracking-[-.04em] text-white">Choose your flight.</h2>
+            <p className="mt-2 max-w-[220px] text-[11px] leading-relaxed text-slate-300">Quick games designed for takeoff, turbulence, and touchdown.</p>
+          </div>
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-amber-200 shadow-inner shadow-white/10"><Plane className="h-5 w-5" /></div>
         </div>
-        <div className="bg-slate-900/90 border border-slate-700 p-3 rounded-2xl text-amber-400 shrink-0">
-          <Plane className="w-6 h-6 animate-pulse" />
+        <div className="relative mt-4 grid grid-cols-3 gap-2 border-t border-white/10 pt-3">
+          <div><div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Level</div><div className="mt-0.5 text-sm font-black text-white">{level}<span className="text-slate-500"> / 6</span></div></div>
+          <div><div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Best run</div><div className="mt-0.5 text-sm font-black text-amber-200">{bestRun}</div></div>
+          <div><div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Unlocked</div><div className="mt-0.5 text-sm font-black text-sky-200">{unlockedLevel}</div></div>
         </div>
-      </div>
+      </section>
 
-      <div className="mb-3 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[.08] to-white/[.02] p-3 shadow-[0_12px_30px_rgba(2,6,23,.22)]">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-[10px] font-black uppercase tracking-[.16em] text-slate-400">Difficulty deck</span>
-          <span className="text-[10px] font-bold text-amber-300">Best run {bestRun}</span>
+      <section className="mb-3 rounded-2xl border border-white/10 bg-slate-900/75 p-3 shadow-[0_12px_30px_rgba(2,6,23,.25)]">
+        <div className="mb-2 flex items-center justify-between"><div><div className="text-[10px] font-black uppercase tracking-[.16em] text-slate-300">Flight progression</div><div className="mt-0.5 text-[10px] text-slate-500">Finish a level to unlock the next</div></div><span className="text-[10px] font-black text-amber-300">{Math.round((unlockedLevel / 6) * 100)}%</span></div>
+        <div className="mb-3 h-1.5 overflow-hidden rounded-full bg-slate-800"><div className="h-full rounded-full bg-gradient-to-r from-sky-400 to-amber-300 transition-all" style={{ width: `${(unlockedLevel / 6) * 100}%` }} /></div>
+        <div className="grid grid-cols-6 gap-1.5">
+          {[1, 2, 3, 4, 5, 6].map((item) => { const locked = item > unlockedLevel; return <button key={item} onClick={() => selectLevel(item)} disabled={locked} className={`flex h-10 items-center justify-center gap-0.5 rounded-xl text-xs font-black transition ${level === item ? 'bg-amber-300 text-slate-950 shadow-lg shadow-amber-300/20' : locked ? 'border border-white/5 bg-slate-950/60 text-slate-600' : 'border border-white/10 bg-slate-800 text-slate-300'}`} aria-label={locked ? `Level ${item} locked` : `Select level ${item}`}>{locked && <Lock className="h-3 w-3" />}<span>{item}</span></button>; })}
         </div>
-        <div className="grid grid-cols-4 gap-2">
-          {[1, 2, 3, 4, 5, 6].map((item) => {
-            const locked = item > unlockedLevel;
-            return (
-              <button key={item} onClick={() => selectLevel(item)} disabled={locked} className={`rounded-xl py-2 text-xs font-black transition flex items-center justify-center gap-1 ${level === item ? 'bg-amber-300 text-slate-950 shadow-lg shadow-amber-300/10' : locked ? 'bg-slate-950/60 text-slate-600 border border-white/5' : 'bg-slate-900 text-slate-400 border border-white/10'}`} aria-label={locked ? `Level ${item} locked` : `Select level ${item}`}>
-                {locked && <Lock className="w-3 h-3" />}L{item}
-              </button>
-            );
-          })}
-        </div>
-      </div>
+      </section>
 
       {/* Sub-tabs Horizontal Scroll */}
       <div className="flex gap-1.5 overflow-x-auto pb-2 mb-3 scrollbar-none snap-x">
