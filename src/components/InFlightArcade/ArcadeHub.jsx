@@ -46,9 +46,9 @@ export default function ArcadeHub() {
   ];
 
   return (
-    <div className="pb-24 pt-2 px-4 max-w-md mx-auto animate-fadeIn">
+    <div className="pb-28 pt-3 px-3 max-w-md mx-auto animate-fadeIn">
       {/* Title Banner */}
-      <div className="relative overflow-hidden bg-gradient-to-br from-[#172554] via-[#0f172a] to-[#111827] border border-sky-400/20 rounded-[1.75rem] p-4 mb-3 shadow-[0_18px_45px_rgba(2,6,23,.35)] flex items-center justify-between">
+      <div className="relative overflow-hidden bg-[radial-gradient(circle_at_100%_0%,rgba(56,189,248,.2),transparent_36%),linear-gradient(145deg,#172554_0%,#0b1224_58%,#050814_100%)] border border-sky-300/20 rounded-[1.75rem] p-4 mb-3 shadow-[0_20px_55px_rgba(2,6,23,.5)] flex items-center justify-between">
         <div className="absolute -right-8 -top-10 h-28 w-28 rounded-full bg-amber-300/10 blur-2xl" />
         <div>
           <span className="text-[10px] font-black text-amber-400 bg-amber-950/80 border border-amber-500/40 px-2 py-0.5 rounded-full uppercase tracking-wider inline-block mb-1">
@@ -66,7 +66,7 @@ export default function ArcadeHub() {
         </div>
       </div>
 
-      <div className="mb-3 rounded-2xl border border-white/10 bg-white/[.04] p-3">
+      <div className="mb-3 rounded-2xl border border-white/10 bg-gradient-to-br from-white/[.08] to-white/[.02] p-3 shadow-[0_12px_30px_rgba(2,6,23,.22)]">
         <div className="flex items-center justify-between mb-2">
           <span className="text-[10px] font-black uppercase tracking-[.16em] text-slate-400">Difficulty deck</span>
           <span className="text-[10px] font-bold text-amber-300">Best run {bestRun}</span>
