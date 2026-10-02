@@ -75,6 +75,10 @@ export default function FlightBrickBreaker({ level = 1 }) {
   useEffect(() => {
     if (gameState !== 'playing') return;
 
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    canvasRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -199,7 +203,10 @@ export default function FlightBrickBreaker({ level = 1 }) {
     };
 
     frameId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(frameId);
+    return () => {
+      cancelAnimationFrame(frameId);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [gameState]);
 
   const handleTouchMove = (e) => {
@@ -248,7 +255,7 @@ export default function FlightBrickBreaker({ level = 1 }) {
           height={360}
           onTouchMove={handleTouchMove}
           onMouseMove={handleMouseMove}
-          className="block cursor-pointer"
+          className="block h-auto w-full max-w-[320px] cursor-pointer"
         />
 
         {/* Start Overlay */}
