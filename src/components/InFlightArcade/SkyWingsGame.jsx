@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { getStorageItem, setStorageItem, KEYS } from '../../utils/storage';
 import { Trophy, Play, RotateCcw, Zap, Cloud, Plane } from 'lucide-react';
 
-export default function SkyWingsGame() {
+export default function SkyWingsGame({ level = 1, onLevelComplete }) {
   const canvasRef = useRef(null);
   const [gameState, setGameState] = useState('start'); // 'start', 'playing', 'gameover'
   const [score, setScore] = useState(0);
@@ -22,7 +22,8 @@ export default function SkyWingsGame() {
     stars: [],
     powerups: [],
     particles: [],
-    isGameOver: false
+    isGameOver: false,
+    levelCleared: false
   });
 
   const startGame = () => {
@@ -33,7 +34,7 @@ export default function SkyWingsGame() {
     stateRef.current = {
       planeX: width / 2,
       planeY: height - 80,
-      speed: 3,
+      speed: 3 + (level - 1) * 0.55,
       score: 0,
       combo: 0,
       shieldTimer: 0,
@@ -243,6 +244,12 @@ export default function SkyWingsGame() {
 
       ctx.restore();
 
+      if (!st.levelCleared && st.score >= level * 250) {
+        st.levelCleared = true;
+        st.isGameOver = true;
+        onLevelComplete?.(level);
+      }
+
       // Game Over Check
       if (st.isGameOver) {
         setGameState('gameover');
@@ -266,6 +273,7 @@ export default function SkyWingsGame() {
   // Touch / Drag / Mouse plane movement
   const handleTouchMove = (e) => {
     if (gameState !== 'playing') return;
+    e.preventDefault();
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -309,8 +317,9 @@ export default function SkyWingsGame() {
           width={320}
           height={420}
           onTouchMove={handleTouchMove}
+          onTouchStart={(e) => e.preventDefault()}
           onMouseMove={handleMouseMove}
-          className="block cursor-crosshair"
+          className="block w-full h-[min(58vh,420px)] max-w-[320px] cursor-crosshair touch-none"
         />
 
         {/* Start Overlay */}

@@ -6,16 +6,31 @@ import FlightBrickBreaker from './FlightBrickBreaker';
 import JetpackRunner from './JetpackRunner';
 import FlightBingo from './FlightBingo';
 import FlightJournal from './FlightJournal';
-import { Gamepad2, Rocket, Layers, Zap, Sparkles, BookOpen, Plane } from 'lucide-react';
+import WordSearch from './WordSearch';
+import CoasterMemory from './CoasterMemory';
+import TriviaQuiz from './TriviaQuiz';
+import { Gamepad2, Rocket, Layers, Zap, Sparkles, BookOpen, Plane, Search, Brain, HelpCircle, Lock } from 'lucide-react';
 
 export default function ArcadeHub() {
   const [subTab, setSubTab] = useState('game');
   const [bestRun, setBestRun] = useState(() => getStorageItem('orlando_arcade_best_run', 0));
   const [level, setLevel] = useState(() => getStorageItem('orlando_arcade_level', 1));
+  const [unlockedLevel, setUnlockedLevel] = useState(() => getStorageItem('orlando_arcade_unlocked_level', 1));
 
   const selectLevel = (nextLevel) => {
+    if (nextLevel > unlockedLevel) return;
     setLevel(nextLevel);
     setStorageItem('orlando_arcade_level', nextLevel);
+  };
+
+  const completeLevel = (completedLevel) => {
+    const nextUnlocked = Math.min(6, Math.max(unlockedLevel, completedLevel + 1));
+    setUnlockedLevel(nextUnlocked);
+    setStorageItem('orlando_arcade_unlocked_level', nextUnlocked);
+    if (nextUnlocked > completedLevel) {
+      setLevel(nextUnlocked);
+      setStorageItem('orlando_arcade_level', nextUnlocked);
+    }
   };
 
   const tabs = [
@@ -25,6 +40,9 @@ export default function ArcadeHub() {
     { id: 'runner', label: 'Jetpack Dash', icon: Zap },
     { id: 'bingo', label: 'Flight Bingo', icon: Sparkles },
     { id: 'journal', label: 'Flight Log', icon: BookOpen },
+    { id: 'wordsearch', label: 'Word Search', icon: Search },
+    { id: 'memory', label: 'Memory Match', icon: Brain },
+    { id: 'trivia', label: 'Flight Trivia', icon: HelpCircle },
   ];
 
   return (
@@ -54,11 +72,14 @@ export default function ArcadeHub() {
           <span className="text-[10px] font-bold text-amber-300">Best run {bestRun}</span>
         </div>
         <div className="grid grid-cols-4 gap-2">
-          {[1, 2, 3, 4].map((item) => (
-            <button key={item} onClick={() => selectLevel(item)} className={`rounded-xl py-2 text-xs font-black transition ${level === item ? 'bg-amber-300 text-slate-950 shadow-lg shadow-amber-300/10' : 'bg-slate-900 text-slate-400 border border-white/10'}`} aria-label={`Select level ${item}`}>
-              L{item}
-            </button>
-          ))}
+          {[1, 2, 3, 4, 5, 6].map((item) => {
+            const locked = item > unlockedLevel;
+            return (
+              <button key={item} onClick={() => selectLevel(item)} disabled={locked} className={`rounded-xl py-2 text-xs font-black transition flex items-center justify-center gap-1 ${level === item ? 'bg-amber-300 text-slate-950 shadow-lg shadow-amber-300/10' : locked ? 'bg-slate-950/60 text-slate-600 border border-white/5' : 'bg-slate-900 text-slate-400 border border-white/10'}`} aria-label={locked ? `Level ${item} locked` : `Select level ${item}`}>
+                {locked && <Lock className="w-3 h-3" />}L{item}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -85,12 +106,15 @@ export default function ArcadeHub() {
       </div>
 
       {/* Tab Content rendering */}
-      {subTab === 'game' && <SkyWingsGame />}
+      {subTab === 'game' && <SkyWingsGame level={level} onLevelComplete={completeLevel} />}
       {subTab === 'lander' && <OrbitLander />}
       {subTab === 'breaker' && <FlightBrickBreaker level={level} />}
       {subTab === 'runner' && <JetpackRunner />}
       {subTab === 'bingo' && <FlightBingo />}
       {subTab === 'journal' && <FlightJournal />}
+      {subTab === 'wordsearch' && <WordSearch />}
+      {subTab === 'memory' && <CoasterMemory />}
+      {subTab === 'trivia' && <TriviaQuiz />}
     </div>
   );
 }
