@@ -24,7 +24,7 @@ export default function ArcadeHub() {
   };
 
   const completeLevel = (completedLevel) => {
-    const nextUnlocked = Math.min(6, Math.max(unlockedLevel, completedLevel + 1));
+    const nextUnlocked = Math.min(10, Math.max(unlockedLevel, completedLevel + 1));
     setUnlockedLevel(nextUnlocked);
     setStorageItem('orlando_arcade_unlocked_level', nextUnlocked);
     if (nextUnlocked > completedLevel) {
@@ -58,17 +58,17 @@ export default function ArcadeHub() {
           <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/15 bg-white/10 text-amber-200 shadow-inner shadow-white/10"><Plane className="h-5 w-5" /></div>
         </div>
         <div className="relative mt-4 grid grid-cols-3 gap-2 border-t border-white/10 pt-3">
-          <div><div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Level</div><div className="mt-0.5 text-sm font-black text-white">{level}<span className="text-slate-500"> / 6</span></div></div>
+          <div><div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Level</div><div className="mt-0.5 text-sm font-black text-white">{level}<span className="text-slate-500"> / 10</span></div></div>
           <div><div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Best run</div><div className="mt-0.5 text-sm font-black text-amber-200">{bestRun}</div></div>
           <div><div className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Unlocked</div><div className="mt-0.5 text-sm font-black text-sky-200">{unlockedLevel}</div></div>
         </div>
       </section>
 
       <section className="mb-3 rounded-2xl border border-white/[0.08] bg-[#11151b] p-3 shadow-[0_12px_30px_rgba(0,0,0,.22)]">
-        <div className="mb-2 flex items-center justify-between"><div><div className="text-[10px] font-black uppercase tracking-[.16em] text-slate-300">Flight progression</div><div className="mt-0.5 text-[10px] text-slate-500">Finish a level to unlock the next</div></div><span className="text-[10px] font-black text-amber-300">{Math.round((unlockedLevel / 6) * 100)}%</span></div>
-        <div className="mb-3 h-1.5 overflow-hidden rounded-full bg-slate-800"><div className="h-full rounded-full bg-gradient-to-r from-sky-400 to-amber-300 transition-all" style={{ width: `${(unlockedLevel / 6) * 100}%` }} /></div>
-        <div className="grid grid-cols-6 gap-1.5">
-          {[1, 2, 3, 4, 5, 6].map((item) => { const locked = item > unlockedLevel; return <button key={item} onClick={() => selectLevel(item)} disabled={locked} className={`flex h-10 items-center justify-center gap-0.5 rounded-xl text-xs font-black transition ${level === item ? 'bg-amber-300 text-slate-950 shadow-lg shadow-amber-300/20' : locked ? 'border border-white/5 bg-slate-950/60 text-slate-600' : 'border border-white/10 bg-slate-800 text-slate-300'}`} aria-label={locked ? `Level ${item} locked` : `Select level ${item}`}>{locked && <Lock className="h-3 w-3" />}<span>{item}</span></button>; })}
+        <div className="mb-2 flex items-center justify-between"><div><div className="text-[10px] font-black uppercase tracking-[.16em] text-slate-300">Flight progression</div><div className="mt-0.5 text-[10px] text-slate-500">Finish a level to unlock the next</div></div><span className="text-[10px] font-black text-amber-300">{Math.round((unlockedLevel / 10) * 100)}%</span></div>
+        <div className="mb-3 h-1.5 overflow-hidden rounded-full bg-slate-800"><div className="h-full rounded-full bg-gradient-to-r from-sky-400 to-amber-300 transition-all" style={{ width: `${(unlockedLevel / 10) * 100}%` }} /></div>
+        <div className="grid grid-cols-5 gap-1.5">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => { const locked = item > unlockedLevel; return <button key={item} onClick={() => selectLevel(item)} disabled={locked} className={`flex h-10 items-center justify-center gap-0.5 rounded-xl text-xs font-black transition ${level === item ? 'bg-amber-300 text-slate-950 shadow-lg shadow-amber-300/20' : locked ? 'border border-white/5 bg-slate-950/60 text-slate-600' : 'border border-white/10 bg-slate-800 text-slate-300'}`} aria-label={locked ? `Level ${item} locked` : `Select level ${item}`}>{locked && <Lock className="h-3 w-3" />}<span>{item}</span></button>; })}
         </div>
       </section>
 

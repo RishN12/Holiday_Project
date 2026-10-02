@@ -46,11 +46,11 @@ export function Header({ onOpenQR }) {
 
       <button
         onClick={onOpenQR}
-        className="flex items-center gap-1.5 bg-[var(--surface)] hover:bg-[var(--accent-soft)] text-[var(--accent)] border border-[var(--line)] px-3 py-1.5 rounded-xl text-xs font-semibold transition active:scale-95 shadow-sm"
-        title="Scan QR Code to test on Pixel 9a"
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface)] text-[var(--accent)] shadow-sm transition hover:bg-[var(--accent-soft)] active:scale-95"
+        title="Scan to share this trip"
+        aria-label="Scan QR code to share this trip"
       >
-        <QrCode className="w-4 h-4" />
-        <span className="hidden sm:inline">Phone QR</span>
+        <QrCode className="h-5 w-5" aria-hidden="true" />
       </button>
     </header>
   );
