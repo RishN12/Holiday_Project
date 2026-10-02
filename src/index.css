@@ -29,6 +29,21 @@
   animation: fadeIn 0.25s ease-out forwards;
 }
 
+.app-shell {
+  background:
+    linear-gradient(180deg, #11151b 0%, #090b0f 42%, #07090d 100%);
+}
+
+.app-shell main > * {
+  animation: fadeIn 0.22s ease-out both;
+}
+
+@media (prefers-color-scheme: light) {
+  .app-shell {
+    background: linear-gradient(180deg, #f5f2ec 0%, #eeebe4 100%);
+  }
+}
+
 /* Safe area inset padding for modern mobile displays */
 body {
   padding-bottom: env(safe-area-inset-bottom);
@@ -38,8 +53,8 @@ body {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile */
-  background-color: #000000; /* Obsidian black background */
-  color: #F8FAFC;
+  background-color: #07090d;
+  color: #f7f3ea;
 }
 
 /* Ensure canvas doesn't trigger scrolling */

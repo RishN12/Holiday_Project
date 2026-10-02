@@ -47,8 +47,8 @@ export default function ArcadeHub() {
 
   return (
     <div className="pb-28 pt-3 px-3 max-w-md mx-auto animate-fadeIn">
-      <section className="arcade-hero relative overflow-hidden rounded-[1.75rem] p-4 mb-3 shadow-[0_22px_60px_rgba(2,6,23,.55)]">
-        <div className="absolute -right-12 -top-14 h-36 w-36 rounded-full bg-sky-300/15 blur-3xl" />
+      <section className="arcade-hero relative overflow-hidden rounded-[1.5rem] p-4 mb-3 shadow-[0_18px_45px_rgba(0,0,0,.3)]">
+        <div className="absolute -right-16 -top-16 h-36 w-36 rounded-full bg-sky-300/10 blur-3xl" />
         <div className="relative flex items-start justify-between gap-3">
           <div>
             <span className="inline-flex items-center rounded-full border border-amber-300/30 bg-amber-300/10 px-2 py-1 text-[9px] font-black uppercase tracking-[.16em] text-amber-200">Offline arcade</span>
@@ -64,7 +64,7 @@ export default function ArcadeHub() {
         </div>
       </section>
 
-      <section className="mb-3 rounded-2xl border border-white/10 bg-slate-900/75 p-3 shadow-[0_12px_30px_rgba(2,6,23,.25)]">
+      <section className="mb-3 rounded-2xl border border-white/[0.08] bg-[#11151b] p-3 shadow-[0_12px_30px_rgba(0,0,0,.22)]">
         <div className="mb-2 flex items-center justify-between"><div><div className="text-[10px] font-black uppercase tracking-[.16em] text-slate-300">Flight progression</div><div className="mt-0.5 text-[10px] text-slate-500">Finish a level to unlock the next</div></div><span className="text-[10px] font-black text-amber-300">{Math.round((unlockedLevel / 6) * 100)}%</span></div>
         <div className="mb-3 h-1.5 overflow-hidden rounded-full bg-slate-800"><div className="h-full rounded-full bg-gradient-to-r from-sky-400 to-amber-300 transition-all" style={{ width: `${(unlockedLevel / 6) * 100}%` }} /></div>
         <div className="grid grid-cols-6 gap-1.5">
@@ -83,8 +83,8 @@ export default function ArcadeHub() {
               onClick={() => setSubTab(t.id)}
               className={`snap-start shrink-0 py-2 px-3 rounded-2xl text-[11px] font-bold flex items-center gap-1.5 transition border ${
                 isActive
-                  ? 'bg-sky-500 text-slate-950 border-sky-400 shadow-md font-black'
-                  : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
+                  ? 'bg-[#e7c982] text-[#11151b] border-[#f2dba4] shadow-md font-black'
+                  : 'bg-[#11151b] text-slate-400 border-white/[0.08] hover:text-white'
               }`}
             >
               <Icon className="w-3.5 h-3.5 shrink-0" />

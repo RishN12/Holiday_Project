@@ -18,7 +18,7 @@ export function Header({ onOpenQR }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-white/10 px-3.5 py-2.5 flex items-center justify-between shadow-[0_10px_30px_rgba(2,6,23,.35)]">
+    <header className="sticky top-0 z-40 bg-slate-950/95 backdrop-blur-xl border-b border-white/[0.08] px-4 py-3 flex items-center justify-between shadow-[0_8px_24px_rgba(0,0,0,.22)]">
       <div className="flex items-center gap-2.5">
         <div className="h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-slate-700/80 bg-slate-950 p-1 shadow-lg shadow-cyan-500/10">
           <img src="/logo-premium-v3.png" alt="Orlando 2026 premium travel logo" className="h-full w-full object-contain" />
