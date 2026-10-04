@@ -18,7 +18,7 @@ export default function App() {
       <Header onOpenQR={() => setIsQrOpen(true)} />
 
       {/* Main Content View */}
-      <main className="flex-1 max-w-md w-full mx-auto">
+      <main className="mx-auto w-full max-w-md flex-1 px-4 pb-28 pt-4">
         {activeTab === 'itinerary' && <Itinerary />}
         {activeTab === 'tip' && <TipCalculator />}
         {activeTab === 'currency' && <CurrencyConverter />}

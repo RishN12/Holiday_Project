@@ -18,7 +18,7 @@ export function Header({ onOpenQR }) {
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--paper)]/95 px-4 py-3 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 flex items-center border-b border-[var(--line)] bg-[var(--paper)]/98 px-4 py-3 backdrop-blur-xl">
       <div className="flex items-center gap-3">
         <div className="h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-slate-700/80 bg-slate-950 p-1 shadow-lg shadow-cyan-500/10">
           <img src="/logo-premium-v3.png" alt="Orlando 2026 premium travel logo" className="h-full w-full object-contain" />
@@ -46,9 +46,8 @@ export function Header({ onOpenQR }) {
 
       <button
         onClick={onOpenQR}
-        className="flex h-10 w-10 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface)] text-[var(--accent)] shadow-sm transition hover:bg-[var(--accent-soft)] active:scale-95"
-        title="Scan to share this trip"
-        aria-label="Scan QR code to share this trip"
+        className="ml-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] shadow-sm transition hover:border-[var(--accent)] hover:text-[var(--accent)] active:scale-95"
+        aria-label="QR code"
       >
         <QrCode className="h-5 w-5" aria-hidden="true" />
       </button>
@@ -63,11 +62,11 @@ export function BottomNav({ activeTab, setActiveTab }) {
     { id: 'currency', label: 'Currency', icon: ArrowLeftRight },
     { id: 'packing', label: 'Packing', icon: CheckSquare },
     { id: 'spending', label: 'Spending', icon: Wallet },
-    { id: 'arcade', label: 'In-Flight ✈️', icon: Gamepad2, highlight: true },
+    { id: 'arcade', label: 'Arcade', icon: Gamepad2, highlight: true },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-[var(--paper)]/95 backdrop-blur-xl border-t border-[var(--line)] px-1.5 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] shadow-[0_-8px_24px_rgba(20,26,25,.08)]">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[var(--line)] bg-[var(--paper)]/98 px-1.5 pt-2 pb-[calc(0.6rem+env(safe-area-inset-bottom))] shadow-[0_-12px_32px_rgba(0,0,0,.18)] backdrop-blur-xl">
       <div className="max-w-md mx-auto flex items-center justify-around">
         {navItems.map((item) => {
           const Icon = item.icon;
