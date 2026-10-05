@@ -11,7 +11,11 @@ export default defineConfig({
       manifest: {
         name: 'Orlando Trip 2026',
         short_name: 'OrlandoTrip',
+        id: '/orlando-trip-2026',
         description: 'Offline Companion for Florida School Trip 2026',
+        lang: 'en-US',
+        dir: 'ltr',
+        prefer_related_applications: false,
         theme_color: '#0f172a',
         background_color: '#0f172a',
         display: 'standalone',
