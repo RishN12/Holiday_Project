@@ -13,24 +13,19 @@ export default function App() {
   const [isQrOpen, setIsQrOpen] = useState(false);
 
   return (
-    <div className="app-shell min-h-screen text-slate-100 flex flex-col justify-between selection:bg-amber-300 selection:text-slate-950">
-      {/* Header */}
+    <div className="min-h-dvh flex flex-col bg-[var(--bg)] text-[var(--ink)] selection:bg-sky-400/30 selection:text-sky-200">
       <Header onOpenQR={() => setIsQrOpen(true)} />
 
-      {/* Main Content View */}
-      <main className="mx-auto w-full max-w-md flex-1 px-4 pb-28 pt-4">
-        {activeTab === 'itinerary' && <Itinerary />}
-        {activeTab === 'tip' && <TipCalculator />}
-        {activeTab === 'currency' && <CurrencyConverter />}
-        {activeTab === 'packing' && <PackingList />}
-        {activeTab === 'spending' && <SpendingTracker />}
-        {activeTab === 'arcade' && <ArcadeHub />}
+      <main className="flex-1 w-full max-w-md mx-auto px-3 pb-28 pt-3 overflow-x-hidden">
+        {activeTab === 'itinerary'  && <Itinerary />}
+        {activeTab === 'tip'        && <TipCalculator />}
+        {activeTab === 'currency'   && <CurrencyConverter />}
+        {activeTab === 'packing'    && <PackingList />}
+        {activeTab === 'spending'   && <SpendingTracker />}
+        {activeTab === 'arcade'     && <ArcadeHub />}
       </main>
 
-      {/* Fixed Bottom Navigation */}
       <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
-
-      {/* QR Code Phone Modal */}
       <QRCodeModal isOpen={isQrOpen} onClose={() => setIsQrOpen(false)} />
     </div>
   );
