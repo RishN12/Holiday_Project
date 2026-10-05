@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { QRCodeSVG } from 'qrcode.react';
-import { X, QrCode, Smartphone, Wifi, Check, Copy } from 'lucide-react';
+import { X, QrCode, Wifi, Check, Copy } from 'lucide-react';
 
 export default function QRCodeModal({ isOpen, onClose }) {
   const [copied, setCopied] = useState(false);
@@ -16,44 +16,40 @@ export default function QRCodeModal({ isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeIn">
-      <div className="bg-slate-900 border border-slate-700/80 w-full max-w-sm rounded-2xl p-6 shadow-2xl relative text-center">
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-full hover:bg-slate-800"
-        >
-          <X className="w-5 h-5" />
-        </button>
-
-        <div className="flex justify-center mb-3 text-sky-400">
-          <div className="bg-sky-500/10 p-3 rounded-2xl border border-sky-500/20">
-            <QrCode className="w-8 h-8" />
+      <div className="relative w-full max-w-sm overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#171918] p-5 text-center text-[#f3f0e9] shadow-2xl shadow-black/40">
+        <div className="mb-5 flex items-center justify-between text-left">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-[#c99a68]">Share trip</p>
+            <h3 className="mt-1 text-xl font-semibold tracking-tight">Open on another phone</h3>
           </div>
-        </div>
-
-        <h3 className="text-xl font-bold text-white mb-1">Scan on Pixel 9a</h3>
-        <p className="text-xs text-slate-400 mb-4">
-          Scan this QR code with your phone camera to test the app on your phone immediately!
-        </p>
-
-        <div className="bg-white p-4 rounded-xl inline-block shadow-inner mb-4">
-          <QRCodeSVG value={currentUrl} size={180} level="H" includeMargin={true} />
-        </div>
-
-        <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs font-mono text-slate-300 break-all mb-4 flex items-center justify-between gap-2">
-          <span className="truncate">{currentUrl}</span>
           <button
-            onClick={handleCopy}
-            className="shrink-0 bg-slate-800 hover:bg-slate-700 text-slate-200 p-1.5 rounded-lg flex items-center gap-1 transition"
+            onClick={onClose}
+            aria-label="Close QR code"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-[#a7aaa4] transition hover:bg-white/10 hover:text-white"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+            <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="bg-sky-950/40 border border-sky-800/40 rounded-xl p-3 text-left flex items-start gap-2.5">
-          <Wifi className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-          <p className="text-[11px] text-sky-200 leading-snug">
-            <strong>Offline Ready:</strong> Once opened on your phone, tap "Add to Home Screen" to install it as a PWA. It will work completely offline!
-          </p>
+        <div className="mx-auto mb-5 inline-block rounded-2xl bg-white p-4 shadow-inner">
+          <QRCodeSVG value={currentUrl} size={184} level="H" includeMargin={true} />
+        </div>
+        <p className="mb-4 text-sm leading-relaxed text-[#a7aaa4]">Scan this code with a camera to open the trip companion.</p>
+
+        <div className="mb-4 flex items-center gap-2 rounded-xl border border-white/10 bg-black/20 p-2 text-left">
+          <span className="min-w-0 flex-1 truncate px-2 text-[11px] text-[#a7aaa4]">{currentUrl}</span>
+          <button
+            onClick={handleCopy}
+            aria-label="Copy trip link"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-white/10 text-[#f3f0e9] transition hover:bg-white/15"
+          >
+            {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
+          </button>
+        </div>
+
+        <div className="flex items-start gap-3 rounded-xl border border-[#c99a68]/20 bg-[#c99a68]/10 p-3 text-left">
+          <Wifi className="mt-0.5 h-4 w-4 shrink-0 text-[#c99a68]" />
+          <p className="text-[11px] leading-relaxed text-[#ddd0bf]">The app is designed to keep your itinerary and travel tools available offline after installation.</p>
         </div>
       </div>
     </div>
