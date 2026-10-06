@@ -5,51 +5,45 @@ export function Header({ onOpenQR }) {
   const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
 
   useEffect(() => {
-    const handleOnline = () => setIsOnline(true);
-    const handleOffline = () => setIsOnline(false);
-
-    window.addEventListener('online', handleOnline);
-    window.addEventListener('offline', handleOffline);
-
-    return () => {
-      window.removeEventListener('online', handleOnline);
-      window.removeEventListener('offline', handleOffline);
-    };
+    const up = () => setIsOnline(true);
+    const dn = () => setIsOnline(false);
+    window.addEventListener('online', up);
+    window.addEventListener('offline', dn);
+    return () => { window.removeEventListener('online', up); window.removeEventListener('offline', dn); };
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 flex items-center border-b border-[var(--line)] bg-[var(--paper)]/98 px-4 py-3 backdrop-blur-xl">
-      <div className="flex items-center gap-3">
-        <div className="h-10 w-10 shrink-0 overflow-hidden rounded-xl border border-slate-700/80 bg-slate-950 p-1 shadow-lg shadow-cyan-500/10">
-          <img src="/logo-premium-v3.png" alt="Orlando 2026 premium travel logo" className="h-full w-full object-contain" />
-        </div>
-        <div>
-          <h1 className="text-base font-extrabold tracking-tight text-white flex items-center gap-1.5">
-            Orlando 2026
-            <span className="text-[10px] font-medium bg-sky-500/20 text-sky-300 border border-sky-500/30 px-1.5 py-0.5 rounded-full">
-              KSC & Universal
+    <header className="sticky top-0 z-40 flex items-center gap-3 border-b border-[var(--line)] bg-[var(--bg)]/95 px-4 py-3 backdrop-blur-xl">
+      {/* Logo */}
+      <div className="h-9 w-9 shrink-0 overflow-hidden rounded-xl border border-[var(--line)] bg-[var(--surface)] shadow-lg">
+        <img src="/logo-premium-v3.png" alt="App logo" className="h-full w-full object-contain" />
+      </div>
+
+      {/* Title + status */}
+      <div className="flex-1 min-w-0">
+        <h1 className="text-[15px] font-extrabold tracking-tight text-white leading-tight">
+          Orlando 2026
+        </h1>
+        <div className="flex items-center gap-1 mt-0.5">
+          {isOnline ? (
+            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-400">
+              <Wifi className="w-2.5 h-2.5" /> Online
             </span>
-          </h1>
-          <p className="text-[11px] text-slate-400 flex items-center gap-1">
-            {isOnline ? (
-              <span className="flex items-center gap-1 text-emerald-400 font-medium">
-                <Wifi className="w-3 h-3" /> Online Mode
-              </span>
-            ) : (
-              <span className="flex items-center gap-1 text-amber-400 font-medium">
-                <WifiOff className="w-3 h-3" /> Offline (PWA Active)
-              </span>
-            )}
-          </p>
+          ) : (
+            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-400">
+              <WifiOff className="w-2.5 h-2.5" /> Offline · PWA Active
+            </span>
+          )}
         </div>
       </div>
 
+      {/* QR button */}
       <button
         onClick={onOpenQR}
-        className="ml-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--ink)] shadow-sm transition hover:border-[var(--accent)] hover:text-[var(--accent)] active:scale-95"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface)] text-[var(--ink2)] transition hover:border-sky-500/60 hover:text-sky-400 active:scale-90"
         aria-label="QR code"
       >
-        <QrCode className="h-5 w-5" aria-hidden="true" />
+        <QrCode className="h-4 w-4" />
       </button>
     </header>
   );
@@ -57,45 +51,53 @@ export function Header({ onOpenQR }) {
 
 export function BottomNav({ activeTab, setActiveTab }) {
   const navItems = [
-    { id: 'itinerary', label: 'Itinerary', icon: Calendar },
-    { id: 'tip', label: 'Tip Calc', icon: Calculator },
-    { id: 'currency', label: 'Currency', icon: ArrowLeftRight },
-    { id: 'packing', label: 'Packing', icon: CheckSquare },
-    { id: 'spending', label: 'Spending', icon: Wallet },
-    { id: 'arcade', label: 'Arcade', icon: Gamepad2, highlight: true },
+    { id: 'itinerary', label: 'Trip',     icon: Calendar },
+    { id: 'tip',       label: 'Tip',      icon: Calculator },
+    { id: 'currency',  label: 'Money',    icon: ArrowLeftRight },
+    { id: 'packing',   label: 'Pack',     icon: CheckSquare },
+    { id: 'spending',  label: 'Spend',    icon: Wallet },
+    { id: 'arcade',    label: 'Arcade',   icon: Gamepad2, highlight: true },
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[var(--line)] bg-[var(--paper)]/98 px-1.5 pt-2 pb-[calc(0.6rem+env(safe-area-inset-bottom))] shadow-[0_-12px_32px_rgba(0,0,0,.18)] backdrop-blur-xl">
-      <div className="max-w-md mx-auto flex items-center justify-around">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-[var(--line)] bg-[var(--bg)]/95 backdrop-blur-xl pb-[env(safe-area-inset-bottom)]">
+      <div className="max-w-md mx-auto flex items-stretch">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = activeTab === item.id;
+          const isHighlight = item.highlight;
           return (
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all duration-200 relative ${
-                isActive
-                  ? 'text-sky-400 font-bold scale-105'
-                  : 'text-slate-400 hover:text-slate-200 font-medium'
+              className={`relative flex flex-1 flex-col items-center justify-center gap-0.5 py-2.5 transition-all duration-200 active:scale-95 ${
+                isActive ? '' : 'opacity-50 hover:opacity-75'
               }`}
             >
-              <div
-                className={`p-1.5 rounded-xl transition ${
-                  isActive
-                    ? item.highlight
-                      ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                      : 'bg-sky-500/15 text-sky-400'
-                    : 'bg-transparent'
-                }`}
-              >
-                <Icon className={`w-5 h-5 ${item.highlight && !isActive ? 'text-amber-400 animate-pulse' : ''}`} />
-              </div>
-              <span className="text-[10px] mt-0.5 tracking-tight">{item.label}</span>
+              {/* Active indicator line at top */}
               {isActive && (
-                <div className="w-1 h-1 rounded-full bg-sky-400 absolute bottom-0.5" />
+                <span className={`absolute top-0 left-1/2 -translate-x-1/2 h-[2px] w-8 rounded-full ${isHighlight ? 'bg-amber-400' : 'bg-sky-400'}`} />
               )}
+
+              <div className={`p-1.5 rounded-xl transition ${
+                isActive
+                  ? isHighlight
+                    ? 'bg-amber-400/15 text-amber-400'
+                    : 'bg-sky-400/15 text-sky-400'
+                  : isHighlight
+                    ? 'text-amber-400'
+                    : 'text-[var(--ink2)]'
+              }`}>
+                <Icon className="w-[18px] h-[18px]" />
+              </div>
+
+              <span className={`text-[9px] font-semibold tracking-wide ${
+                isActive
+                  ? isHighlight ? 'text-amber-400' : 'text-sky-400'
+                  : 'text-[var(--ink2)]'
+              }`}>
+                {item.label}
+              </span>
             </button>
           );
         })}

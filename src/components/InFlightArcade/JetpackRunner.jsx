@@ -1,266 +1,236 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { getStorageItem, setStorageItem } from '../../utils/storage';
-import { Trophy, Play, RotateCcw, Zap, Compass } from 'lucide-react';
+import { Trophy, RotateCcw, Zap } from 'lucide-react';
+
+const W = 320, H = 400;
+const GROUND = H - 48;
 
 export default function JetpackRunner() {
   const canvasRef = useRef(null);
-  const [gameState, setGameState] = useState('start'); // 'start', 'playing', 'gameover'
-  const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(() => getStorageItem('orlando_runner_high_score', 0));
+  const stateRef  = useRef(null);
+  const frameRef  = useRef(null);
+  const [phase,    setPhase]    = useState('start'); // start | playing | dead
+  const [score,    setScore]    = useState(0);
+  const [best,     setBest]     = useState(() => getStorageItem('runner_best', 0));
+  const [combo,    setCombo]    = useState(0);
 
-  const stateRef = useRef({
-    runnerY: 280,
-    vy: 0,
-    jumpCount: 0,
-    gravity: 0.6,
-    obstacles: [],
-    coins: [],
-    score: 0,
-    tick: 0,
-    isEnded: false
+  const initState = () => ({
+    y: GROUND, vy: 0, jumps: 0,
+    obs: [], coins: [], particles: [],
+    tick: 0, score: 0, combo: 0, dead: false,
   });
 
-  const startGame = () => {
-    const canvas = canvasRef.current;
-    const h = canvas ? canvas.height : 360;
+  const jump = useCallback(() => {
+    const s = stateRef.current;
+    if (!s || s.dead) return;
+    if (s.jumps < 2) { s.vy = -13; s.jumps++; }
+  }, []);
 
-    stateRef.current = {
-      runnerY: h - 60,
-      vy: 0,
-      jumpCount: 0,
-      gravity: 0.6,
-      obstacles: [],
-      coins: [],
-      score: 0,
-      tick: 0,
-      isEnded: false
-    };
-
-    setScore(0);
-    setGameState('playing');
-  };
-
-  const handleJump = () => {
-    const st = stateRef.current;
-    if (gameState === 'playing' && st.jumpCount < 2) {
-      st.vy = -10.5;
-      st.jumpCount++;
-    }
+  const start = () => {
+    stateRef.current = initState();
+    setScore(0); setCombo(0);
+    setPhase('playing');
   };
 
   useEffect(() => {
-    if (gameState !== 'playing') return;
-
+    if (phase !== 'playing') return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    let frameId;
-
-    const groundY = canvas.height - 50;
 
     const loop = () => {
-      const st = stateRef.current;
-      st.tick++;
+      const s = stateRef.current;
+      if (!s || s.dead) return;
+      s.tick++;
 
-      if (!st.isEnded) {
-        // Physics update
-        st.vy += st.gravity;
-        st.runnerY += st.vy;
+      // ── Physics ──────────────────────────────────────────
+      s.vy = Math.min(s.vy + 0.65, 18);
+      s.y  = Math.min(s.y + s.vy, GROUND);
+      if (s.y >= GROUND) { s.y = GROUND; s.vy = 0; s.jumps = 0; }
 
-        if (st.runnerY >= groundY) {
-          st.runnerY = groundY;
-          st.vy = 0;
-          st.jumpCount = 0;
-        }
+      const spd = 4.5 + s.score / 600;
 
-        const speedMultiplier = 1 + (st.score / 500); // Speed scales up with score
-        
-        // Spawn obstacles
-        if (st.tick % Math.max(40, Math.floor(80 / speedMultiplier)) === 0) {
-          st.obstacles.push({
-            x: canvas.width + 20,
-            w: 18 + Math.random() * 10,
-            h: 30 + Math.random() * 20,
-            speed: (4.5 + Math.random() * 2) * speedMultiplier
-          });
-        }
-
-        // Spawn coins
-        if (st.tick % 110 === 0) {
-          st.coins.push({
-            x: canvas.width + 20,
-            y: groundY - 40 - Math.random() * 80,
-            r: 8,
-            speed: 4 * speedMultiplier
-          });
-        }
-
-        // Move & Check Obstacles
-        for (let i = st.obstacles.length - 1; i >= 0; i--) {
-          const obs = st.obstacles[i];
-          obs.x -= obs.speed;
-
-          // Check collision with runner (at X=40)
-          const runnerX = 40;
-          const runnerW = 20;
-          const runnerH = 30;
-
-          if (
-            runnerX + runnerW >= obs.x &&
-            runnerX <= obs.x + obs.w &&
-            st.runnerY + runnerH >= groundY - obs.h
-          ) {
-            st.isEnded = true;
-            setGameState('gameover');
-            setHighScore((prev) => {
-              const h = Math.max(prev, st.score);
-              setStorageItem('orlando_runner_high_score', h);
-              return h;
-            });
-          }
-
-          if (obs.x < -30) {
-            st.obstacles.splice(i, 1);
-            st.score += 10;
-            setScore(st.score);
-          }
-        }
-
-        // Move & Check Coins
-        for (let i = st.coins.length - 1; i >= 0; i--) {
-          const coin = st.coins[i];
-          coin.x -= coin.speed;
-
-          const dist = Math.hypot(40 - coin.x, st.runnerY - coin.y);
-          if (dist < 20) {
-            st.coins.splice(i, 1);
-            st.score += 30;
-            setScore(st.score);
-          } else if (coin.x < -20) {
-            st.coins.splice(i, 1);
-          }
-        }
+      // ── Spawn ─────────────────────────────────────────────
+      const gap = Math.max(38, Math.floor(80 / (1 + s.score / 800)));
+      if (s.tick % gap === 0) {
+        s.obs.push({ x: W + 16, w: 14 + Math.random() * 12, h: 28 + Math.random() * 28 });
+      }
+      if (s.tick % 120 === 0) {
+        s.coins.push({ x: W + 16, y: GROUND - 55 - Math.random() * 90, r: 9 });
       }
 
-      // Render Graphics
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // ── Obstacles ─────────────────────────────────────────
+      for (let i = s.obs.length - 1; i >= 0; i--) {
+        s.obs[i].x -= spd;
+        const o = s.obs[i];
+        const px = 44, ph = 32, py = s.y - ph;
+        if (px + 20 > o.x && px < o.x + o.w && py + ph > GROUND - o.h) {
+          s.dead = true;
+          setBest(prev => { const v = Math.max(prev, s.score); setStorageItem('runner_best', v); return v; });
+          setPhase('dead');
+          return;
+        }
+        if (o.x < -20) { s.obs.splice(i, 1); s.score += 12; setScore(s.score); }
+      }
 
-      // Background Sky
-      const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      bgGrad.addColorStop(0, '#000000'); // Obsidian
-      bgGrad.addColorStop(1, '#1A1A1A');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // ── Coins ─────────────────────────────────────────────
+      for (let i = s.coins.length - 1; i >= 0; i--) {
+        s.coins[i].x -= spd;
+        const c = s.coins[i];
+        if (Math.hypot(44 - c.x, s.y - 14 - c.y) < 24) {
+          s.combo++;
+          s.score += 30 * s.combo;
+          setScore(s.score);
+          setCombo(s.combo);
+          s.particles.push(...Array.from({length: 6}, () => ({
+            x: c.x, y: c.y, vx: (Math.random()-0.5)*4, vy: -Math.random()*4,
+            life: 1, col: '#d4af37'
+          })));
+          s.coins.splice(i, 1);
+        } else if (c.x < -20) { s.combo = 0; setCombo(0); s.coins.splice(i, 1); }
+      }
 
-      // Draw Ground
-      ctx.fillStyle = '#262626';
-      ctx.fillRect(0, groundY + 20, canvas.width, canvas.height - groundY);
-      ctx.fillStyle = '#D4AF37'; // Gold accent
-      ctx.fillRect(0, groundY + 20, canvas.width, 3);
+      // ── Particles ─────────────────────────────────────────
+      for (let i = s.particles.length - 1; i >= 0; i--) {
+        const p = s.particles[i];
+        p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.life -= 0.06;
+        if (p.life <= 0) s.particles.splice(i, 1);
+      }
 
-      // Draw Obstacles
-      st.obstacles.forEach((obs) => {
-        ctx.fillStyle = '#F43F5E';
-        ctx.fillRect(obs.x, groundY + 20 - obs.h, obs.w, obs.h);
-      });
+      // ── Draw ──────────────────────────────────────────────
+      ctx.clearRect(0, 0, W, H);
 
-      // Draw Coins
-      st.coins.forEach((coin) => {
-        ctx.fillStyle = '#F59E0B';
+      // Sky gradient
+      const sky = ctx.createLinearGradient(0, 0, 0, H);
+      sky.addColorStop(0, '#09090b');
+      sky.addColorStop(1, '#141417');
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, W, H);
+
+      // Stars (static seed for performance)
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      for (let i = 0; i < 28; i++) {
+        const sx = ((i * 73 + s.tick * 0.4) % W);
+        const sy = ((i * 47) % (GROUND - 20));
+        ctx.fillRect(sx, sy, 1.5, 1.5);
+      }
+
+      // Ground
+      ctx.fillStyle = '#1c1c21';
+      ctx.fillRect(0, GROUND + 4, W, H);
+      ctx.fillStyle = '#d4af37';
+      ctx.fillRect(0, GROUND + 4, W, 2);
+
+      // Obstacles
+      s.obs.forEach(o => {
+        const grd = ctx.createLinearGradient(o.x, 0, o.x + o.w, 0);
+        grd.addColorStop(0, '#f43f5e');
+        grd.addColorStop(1, '#e11d48');
+        ctx.fillStyle = grd;
         ctx.beginPath();
-        ctx.arc(coin.x, coin.y, coin.r, 0, Math.PI * 2);
+        ctx.roundRect(o.x, GROUND + 4 - o.h, o.w, o.h, [4, 4, 0, 0]);
         ctx.fill();
       });
 
-      // Draw Runner Player
-      ctx.fillStyle = '#38BDF8';
+      // Coins
+      s.coins.forEach(c => {
+        ctx.fillStyle = '#d4af37';
+        ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = '#fef08a';
+        ctx.font = 'bold 9px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText('$', c.x, c.y + 3);
+      });
+
+      // Particles
+      s.particles.forEach(p => {
+        ctx.globalAlpha = p.life;
+        ctx.fillStyle = p.col;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 3, 0, Math.PI*2); ctx.fill();
+        ctx.globalAlpha = 1;
+      });
+
+      // Player
+      const px = 44, py = s.y - 32;
+      // Flame
+      if (s.jumps > 0 && s.y < GROUND) {
+        ctx.fillStyle = s.jumps === 2 ? '#ec4899' : '#f97316';
+        ctx.beginPath();
+        ctx.moveTo(px - 7, py + 30);
+        ctx.lineTo(px, py + 44 + Math.random() * 8);
+        ctx.lineTo(px + 7, py + 30);
+        ctx.fill();
+      }
+      // Body
+      ctx.fillStyle = '#38bdf8';
       ctx.beginPath();
-      ctx.roundRect(30, st.runnerY - 10, 20, 30, 6);
+      ctx.roundRect(px - 11, py, 22, 32, 6);
       ctx.fill();
+      // Visor
+      ctx.fillStyle = '#000';
+      ctx.beginPath(); ctx.roundRect(px - 6, py + 6, 12, 8, 3); ctx.fill();
+      ctx.fillStyle = '#7dd3fc';
+      ctx.beginPath(); ctx.roundRect(px - 5, py + 7, 10, 6, 2); ctx.fill();
 
-      // Jetpack flame visual when jumping
-      if (st.jumpCount > 0 && st.runnerY < groundY) {
-        ctx.fillStyle = st.jumpCount === 2 ? '#EC4899' : '#F97316'; // Pink for double jump
-        ctx.beginPath();
-        ctx.moveTo(35, st.runnerY + 20);
-        ctx.lineTo(40, st.runnerY + 35 + Math.random() * 10);
-        ctx.lineTo(45, st.runnerY + 20);
-        ctx.fill();
-      }
-
-      if (!st.isEnded) {
-        frameId = requestAnimationFrame(loop);
-      }
+      frameRef.current = requestAnimationFrame(loop);
     };
 
-    frameId = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(frameId);
-  }, [gameState]);
+    frameRef.current = requestAnimationFrame(loop);
+    return () => { if (frameRef.current) cancelAnimationFrame(frameRef.current); };
+  }, [phase]);
+
+  const overlayBase = "absolute inset-0 flex flex-col items-center justify-center bg-black/85 backdrop-blur-md rounded-2xl p-6 text-center gap-3";
 
   return (
-    <div className="flex flex-col items-center animate-fadeIn" onClick={handleJump}>
-      {/* HUD Header */}
-      <div className="w-full flex items-center justify-between mb-2 px-1">
+    <div className="flex flex-col gap-3 animate-fadeIn" onClick={jump}>
+      {/* HUD */}
+      <div className="flex items-center justify-between px-1">
         <div>
-          <h3 className="text-sm font-extrabold text-white flex items-center gap-1.5">
-            <Zap className="w-4 h-4 text-amber-400" />
-            Sky Dash: Jetpack Runner
-          </h3>
-          <span className="text-[10px] text-slate-400">Tap anywhere on screen to jetpack jump!</span>
+          <p className="text-sm font-extrabold text-white flex items-center gap-1.5">
+            <Zap className="w-4 h-4 text-amber-400" /> Jetpack Dash
+          </p>
+          <p className="text-[10px] text-[var(--ink2)]">Tap anywhere to jetpack jump · Double-tap for boost</p>
         </div>
         <div className="text-right">
-          <span className="text-xs font-bold text-amber-400 flex items-center gap-1">
-            <Trophy className="w-3.5 h-3.5" /> Best: {highScore}
-          </span>
-          <span className="text-xs font-black text-sky-300">Distance: {score}m</span>
+          <p className="text-xs font-black text-white">{score}</p>
+          <p className="text-[10px] text-amber-400 flex items-center gap-1 justify-end"><Trophy className="w-3 h-3"/> {best}</p>
         </div>
       </div>
 
-      {/* Canvas Area */}
-      <div className="relative border-2 border-slate-800 rounded-3xl overflow-hidden shadow-2xl bg-slate-950 touch-none">
-        <canvas ref={canvasRef} width={320} height={360} className="block cursor-pointer" />
+      {/* Combo badge */}
+      {combo > 1 && (
+        <div className="mx-auto px-3 py-1 rounded-full bg-amber-400/15 border border-amber-400/40 text-amber-400 text-xs font-black animate-fadeIn">
+          x{combo} COMBO!
+        </div>
+      )}
 
-        {/* Start Overlay */}
-        {gameState === 'start' && (
-          <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center">
-            <Zap className="w-10 h-10 text-amber-400 mb-2 animate-bounce" />
-            <h4 className="text-lg font-black text-white mb-1">Jetpack Runner Arcade</h4>
-            <p className="text-xs text-slate-300 mb-4 max-w-[220px]">
-              Tap screen to jump over obstacles and collect altitude coins!
-            </p>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                startGame();
-              }}
-              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs px-6 py-3 rounded-2xl shadow-lg transition active:scale-95 flex items-center gap-1.5"
-            >
-              <Play className="w-4 h-4 fill-slate-950" /> Start Runner
+      {/* Canvas */}
+      <div className="relative rounded-2xl overflow-hidden border border-[var(--line)] shadow-2xl">
+        <canvas ref={canvasRef} width={W} height={H} className="w-full" style={{maxHeight: '380px'}} />
+
+        {phase === 'start' && (
+          <div className={overlayBase}>
+            <Zap className="w-12 h-12 text-amber-400 animate-bounce" />
+            <h3 className="text-xl font-black text-white">Jetpack Dash</h3>
+            <p className="text-xs text-[var(--ink2)] max-w-[200px]">Tap to jump, tap again mid-air for a double jump! Grab coins to build combos.</p>
+            <button onClick={e => { e.stopPropagation(); start(); }}
+              className="btn-accent mt-1 px-8 py-3 text-sm">
+              Launch 🚀
             </button>
           </div>
         )}
 
-        {/* Game Over Overlay */}
-        {gameState === 'gameover' && (
-          <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center p-6 text-center animate-fadeIn">
-            <h4 className="text-lg font-black text-white mb-1">Obstacle Collision!</h4>
-            <p className="text-xs text-slate-300 mb-4">Distance Survived: {score}m</p>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                startGame();
-              }}
-              className="bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs px-5 py-2.5 rounded-xl shadow-md transition flex items-center gap-1.5"
-            >
-              <RotateCcw className="w-3.5 h-3.5" /> Try Again
+        {phase === 'dead' && (
+          <div className={overlayBase}>
+            <p className="text-4xl font-black text-white">{score}</p>
+            <p className="text-xs text-[var(--ink2)]">Best: {best}</p>
+            <button onClick={e => { e.stopPropagation(); start(); }}
+              className="btn-accent flex items-center gap-2 px-6 py-2.5">
+              <RotateCcw className="w-4 h-4" /> Try Again
             </button>
           </div>
         )}
       </div>
-
-      <p className="text-[10px] text-slate-500 mt-2 text-center">
-        Tip: Tap anywhere on your phone screen to trigger jetpack boost jump.
-      </p>
+      <p className="text-center text-[10px] text-[var(--ink2)]">🟠 Orange flame = 1st jump · 🟣 Pink = double jump</p>
     </div>
   );
 }
