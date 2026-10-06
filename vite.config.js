@@ -11,16 +11,18 @@ export default defineConfig({
       manifest: {
         name: 'Orlando Trip 2026',
         short_name: 'OrlandoTrip',
-        id: '/orlando-trip-2026',
-        description: 'Offline Companion for Florida School Trip 2026',
+        id: '/',
+        description: 'Offline companion for the Orlando school trip 2026',
         lang: 'en-US',
         dir: 'ltr',
         prefer_related_applications: false,
+        scope: '/',
         theme_color: '#0f172a',
         background_color: '#0f172a',
         display: 'standalone',
-        orientation: 'portrait',
-        start_url: '/',
+        display_override: ['standalone', 'minimal-ui'],
+        orientation: 'portrait-primary',
+        start_url: '/?source=pwa',
         icons: [
           {
             src: 'pwa-192x192.png',
