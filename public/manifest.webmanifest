@@ -1,0 +1,30 @@
+{
+  "name": "Orlando Trip 2026",
+  "short_name": "Orlando Trip",
+  "description": "Your offline companion for the Orlando school trip.",
+  "lang": "en-US",
+  "dir": "ltr",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "portrait-primary",
+  "theme_color": "#121416",
+  "background_color": "#121416",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
