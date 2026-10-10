@@ -7,6 +7,7 @@ import PackingList from './components/PackingList';
 import SpendingTracker from './components/SpendingTracker';
 import ArcadeHub from './components/InFlightArcade/ArcadeHub';
 import QRCodeModal from './components/QRCodeModal';
+import PhotoGallery from './components/PhotoGallery';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('itinerary');
@@ -23,6 +24,7 @@ export default function App() {
         {activeTab === 'packing'    && <PackingList />}
         {activeTab === 'spending'   && <SpendingTracker />}
         {activeTab === 'arcade'     && <ArcadeHub />}
+        {activeTab === 'photos'     && <PhotoGallery />}
       </main>
 
       <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />

@@ -5,7 +5,8 @@ import FlightBrickBreaker from './FlightBrickBreaker';
 import JetpackRunner from './JetpackRunner';
 import FlightBingo from './FlightBingo';
 import FlightJournal from './FlightJournal';
-import { Gamepad2, Rocket, Layers, Zap, Sparkles, BookOpen } from 'lucide-react';
+import { Gamepad2, Rocket, Layers, Zap, Sparkles, BookOpen, Lock, Check } from 'lucide-react';
+import { getStorageItem, setStorageItem } from '../../utils/storage';
 
 const TABS = [
   { id: 'dodge',   label: 'Dodge',    icon: Gamepad2,  color: 'text-sky-400' },
@@ -18,6 +19,17 @@ const TABS = [
 
 export default function ArcadeHub() {
   const [tab, setTab] = useState('dodge');
+  const [level, setLevel] = useState(() => getStorageItem('orlando_dodge_level_v1', 1));
+  const [unlockedLevel, setUnlockedLevel] = useState(() => getStorageItem('orlando_dodge_unlocked_v1', 1));
+
+  const completeLevel = (completed) => {
+    const next = Math.min(8, completed + 1);
+    setUnlockedLevel((current) => {
+      const unlocked = Math.max(current, next);
+      setStorageItem('orlando_dodge_unlocked_v1', unlocked);
+      return unlocked;
+    });
+  };
 
   return (
     <div className="flex flex-col gap-3 pb-24 pt-1 animate-fadeIn">
@@ -57,9 +69,24 @@ export default function ArcadeHub() {
         })}
       </div>
 
+      {tab === 'dodge' && (
+        <div className="arcade-levels" aria-label="Rocket run levels">
+          <div className="flex items-center justify-between mb-2"><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ink2)]">Rocket run</span><span className="text-[10px] text-[var(--ink2)]">{unlockedLevel}/8 unlocked</span></div>
+          <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
+            {Array.from({ length: 8 }, (_, index) => index + 1).map((item) => {
+              const locked = item > unlockedLevel;
+              const complete = item < unlockedLevel;
+              return <button key={item} disabled={locked} onClick={() => { setLevel(item); setStorageItem('orlando_dodge_level_v1', item); }} className={`level-chip ${level === item ? 'level-chip-active' : ''} ${locked ? 'level-chip-locked' : ''}`} aria-label={`Level ${item}${locked ? ', locked' : ''}`}>
+                {locked ? <Lock size={11} /> : complete ? <Check size={11} /> : null}<span>{item}</span>
+              </button>;
+            })}
+          </div>
+        </div>
+      )}
+
       {/* Content */}
       <div className="mt-1">
-        {tab === 'dodge'   && <SkyWingsGame />}
+        {tab === 'dodge'   && <SkyWingsGame key={level} level={level} onLevelComplete={completeLevel} />}
         {tab === 'lander'  && <OrbitLander />}
         {tab === 'breaker' && <FlightBrickBreaker />}
         {tab === 'runner'  && <JetpackRunner />}

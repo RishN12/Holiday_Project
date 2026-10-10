@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, Calculator, ArrowLeftRight, CheckSquare, Wallet, Gamepad2, QrCode, Wifi, WifiOff } from 'lucide-react';
+import { Calendar, Calculator, ArrowLeftRight, CheckSquare, Wallet, Gamepad2, QrCode, Wifi, WifiOff, Images } from 'lucide-react';
 
 export function Header({ onOpenQR }) {
   const [isOnline, setIsOnline] = useState(typeof navigator !== 'undefined' ? navigator.onLine : true);
@@ -57,6 +57,7 @@ export function BottomNav({ activeTab, setActiveTab }) {
     { id: 'packing',   label: 'Pack',     icon: CheckSquare },
     { id: 'spending',  label: 'Spend',    icon: Wallet },
     { id: 'arcade',    label: 'Arcade',   icon: Gamepad2, highlight: true },
+    { id: 'photos',    label: 'Photos',   icon: Images },
   ];
 
   return (
