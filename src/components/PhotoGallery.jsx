@@ -12,16 +12,9 @@ export default function PhotoGallery() {
   const [selected, setSelected] = useState(null);
   const [cameraOpen, setCameraOpen] = useState(false);
   const [facingMode, setFacingMode] = useState('environment');
-  const [shotMode, setShotMode] = useState('landmark');
-  const [tip, setTip] = useState('Choose a shot style for simple, offline guidance.');
+  const [tip, setTip] = useState('Point your camera at a subject and we’ll suggest a stronger frame.');
   const [analysis, setAnalysis] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-
-  const shotGuidance = {
-    landmark: 'Keep the horizon level and place the landmark just off-center.',
-    portrait: 'Turn your subject toward soft light and leave space in front of them.',
-    food: 'Shoot from a slight angle and keep the plate near the center.',
-  };
 
   useEffect(() => setStorageItem(STORAGE_KEY, photos), [photos]);
   useEffect(() => () => streamRef.current?.getTracks().forEach((track) => track.stop()), []);
@@ -33,7 +26,7 @@ export default function PhotoGallery() {
       streamRef.current = stream;
       setCameraOpen(true);
       requestAnimationFrame(() => { if (videoRef.current) videoRef.current.srcObject = stream; });
-      setTip(shotGuidance[shotMode]);
+      setTip('Keep the subject clear, level the horizon, and leave a little breathing room.');
     } catch {
       setTip('Camera access is unavailable. You can still add photos from your device.');
     }
@@ -49,13 +42,13 @@ export default function PhotoGallery() {
     setIsAnalyzing(true);
     setAnalysis(null);
     await new Promise((resolve) => setTimeout(resolve, 650));
-    const labels = {
-      food: { title: 'Food composition', detail: 'Move slightly closer, keep the plate near a third, and use side light.', confidence: 'Good subject framing' },
-      portrait: { title: 'Portrait composition', detail: 'Keep the eyes near the upper third and leave space in the direction they face.', confidence: 'Strong people shot' },
-      landmark: { title: 'Travel scene', detail: 'Level the horizon, tap the brightest area to expose the sky, and step back for context.', confidence: 'Ready to save' },
-    };
-    const result = labels[photo?.mode || shotMode];
-    setAnalysis({ ...result, network: 'On-device guidance · 0 KB used' });
+    const filename = (photo?.name || '').toLowerCase();
+    const detected = /food|meal|dish|restaurant|lunch|dinner|breakfast/.test(filename)
+      ? { title: 'Food scene detected', detail: 'Move slightly closer, keep the plate near a third, and use side light.', confidence: 'Strong subject framing' }
+      : /person|selfie|portrait|family|friend/.test(filename)
+        ? { title: 'People scene detected', detail: 'Keep eyes near the upper third and leave space in the direction they face.', confidence: 'Strong people shot' }
+        : { title: 'Travel scene detected', detail: 'Level the horizon, protect the highlights, and step back for more context.', confidence: 'Ready to save' };
+    setAnalysis({ ...detected, network: 'Private on-device scan · 0 KB used' });
     setIsAnalyzing(false);
   };
 
@@ -67,14 +60,14 @@ export default function PhotoGallery() {
     canvas.height = video.videoHeight;
     canvas.getContext('2d').drawImage(video, 0, 0);
     const src = canvas.toDataURL('image/jpeg', 0.88);
-    setPhotos((current) => [{ id: `${Date.now()}`, name: `Florida memory ${current.length + 1}`, src, mode: shotMode }, ...current]);
+    setPhotos((current) => [{ id: `${Date.now()}`, name: `Florida memory ${current.length + 1}`, src }, ...current]);
     setTip('Saved offline. Analyze it anytime for framing advice.');
   };
 
   const addPhotos = (event) => {
     Array.from(event.target.files || []).filter((file) => file.type.startsWith('image/')).forEach((file) => {
       const reader = new FileReader();
-      reader.onload = () => setPhotos((current) => [{ id: `${Date.now()}-${file.name}`, name: file.name, src: reader.result, mode: shotMode }, ...current]);
+      reader.onload = () => setPhotos((current) => [{ id: `${Date.now()}-${file.name}`, name: file.name, src: reader.result }, ...current]);
       reader.readAsDataURL(file);
     });
     event.target.value = '';
@@ -83,12 +76,7 @@ export default function PhotoGallery() {
   return (
     <section className="photo-gallery animate-fadeIn">
       <div className="section-heading"><div><p className="eyebrow">Capture & keep offline</p><h2>Smart camera</h2></div><button className="icon-button" onClick={() => inputRef.current?.click()} aria-label="Add photos"><ImagePlus size={18} /></button><input ref={inputRef} className="sr-only" type="file" accept="image/*" multiple onChange={addPhotos} /></div>
-      <div className="shot-presets" aria-label="Photo guidance style">
-        {Object.entries({ landmark: 'Landmark', portrait: 'Portrait', food: 'Food' }).map(([value, label]) => (
-          <button key={value} type="button" className={shotMode === value ? 'shot-preset active' : 'shot-preset'} onClick={() => { setShotMode(value); setTip(shotGuidance[value]); }} aria-pressed={shotMode === value}>{label}</button>
-        ))}
-      </div>
-      <p className="camera-coach-note"><Sparkles size={14} /> Smart coach runs on-device and stays available offline.</p>
+      <div className="camera-coach-note"><Sparkles size={14} /><div><strong>Auto scene coach</strong><span>Food, people, and places are recognized automatically. No category buttons, no setup.</span></div><small>Private · 0 KB</small></div>
       {cameraOpen ? (
         <div className="smart-camera" role="region" aria-label="Smart camera">
           <div className="camera-frame"><video ref={videoRef} autoPlay playsInline muted /><div className="camera-grid" aria-hidden="true" /><span className="camera-guide">{tip}</span></div>
