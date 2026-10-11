@@ -76,7 +76,7 @@ export default function PhotoGallery() {
   return (
     <section className="photo-gallery animate-fadeIn">
       <div className="section-heading"><div><p className="eyebrow">Capture & keep offline</p><h2>Smart camera</h2></div><button className="icon-button" onClick={() => inputRef.current?.click()} aria-label="Add photos"><ImagePlus size={18} /></button><input ref={inputRef} className="sr-only" type="file" accept="image/*" multiple onChange={addPhotos} /></div>
-      <div className="camera-coach-note"><Sparkles size={14} /><div><strong>Auto scene coach</strong><span>Food, people, and places are recognized automatically. No category buttons, no setup.</span></div><small>Private · 0 KB</small></div>
+      <div className="camera-coach-note"><div className="coach-icon"><Sparkles size={15} /></div><div><strong>Smart scene coach</strong><span>Point, compose, and shoot. The coach recognizes what is in frame and suggests a better angle.</span></div><small>On device</small></div>
       {cameraOpen ? (
         <div className="smart-camera" role="region" aria-label="Smart camera">
           <div className="camera-frame"><video ref={videoRef} autoPlay playsInline muted /><div className="camera-grid" aria-hidden="true" /><span className="camera-guide">{tip}</span></div>
