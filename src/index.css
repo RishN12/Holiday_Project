@@ -104,6 +104,14 @@
 .level-chip-active { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, var(--surface2)); color: var(--accent); }
 .level-chip-locked { opacity: .38; }
 
+.rocket-game { width: 100%; }
+.rocket-game .relative { width: min(100%, 320px); }
+@media (max-height: 760px) {
+  .rocket-game canvas { height: min(43vh, 300px) !important; }
+  .rocket-game > div:first-child { margin-bottom: .45rem; }
+  .rocket-game .mt-2 { margin-top: .35rem; }
+}
+
 .photo-gallery { padding-bottom: 1rem; }
 .section-heading { display: flex; align-items: center; gap: .65rem; margin: .4rem 0 1rem; }
 .section-heading > div { flex: 1; }

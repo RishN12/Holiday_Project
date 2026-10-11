@@ -23,7 +23,7 @@ export default function ArcadeHub() {
   const [unlockedLevel, setUnlockedLevel] = useState(() => getStorageItem('orlando_dodge_unlocked_v1', 1));
 
   const completeLevel = (completed) => {
-    const next = Math.min(8, completed + 1);
+    const next = Math.min(12, completed + 1);
     setUnlockedLevel((current) => {
       const unlocked = Math.max(current, next);
       setStorageItem('orlando_dodge_unlocked_v1', unlocked);
@@ -71,9 +71,9 @@ export default function ArcadeHub() {
 
       {tab === 'dodge' && (
         <div className="arcade-levels" aria-label="Rocket run levels">
-          <div className="flex items-center justify-between mb-2"><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ink2)]">Rocket run</span><span className="text-[10px] text-[var(--ink2)]">{unlockedLevel}/8 unlocked</span></div>
+          <div className="flex items-center justify-between mb-2"><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ink2)]">Rocket run</span><span className="text-[10px] text-[var(--ink2)]">{unlockedLevel}/12 unlocked</span></div>
           <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
-            {Array.from({ length: 8 }, (_, index) => index + 1).map((item) => {
+            {Array.from({ length: 12 }, (_, index) => index + 1).map((item) => {
               const locked = item > unlockedLevel;
               const complete = item < unlockedLevel;
               return <button key={item} disabled={locked} onClick={() => { setLevel(item); setStorageItem('orlando_dodge_level_v1', item); }} className={`level-chip ${level === item ? 'level-chip-active' : ''} ${locked ? 'level-chip-locked' : ''}`} aria-label={`Level ${item}${locked ? ', locked' : ''}`}>

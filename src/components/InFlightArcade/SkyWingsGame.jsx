@@ -292,7 +292,7 @@ export default function SkyWingsGame({ level = 1, onLevelComplete }) {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center rocket-game">
       {/* Game Title & Scores */}
       <div className="w-full flex items-center justify-between mb-3 px-1">
         <div>
@@ -319,7 +319,7 @@ export default function SkyWingsGame({ level = 1, onLevelComplete }) {
           onTouchMove={handleTouchMove}
           onTouchStart={(e) => e.preventDefault()}
           onMouseMove={handleMouseMove}
-          className="block w-full h-[min(58vh,420px)] max-w-[320px] cursor-crosshair touch-none"
+          className="block w-full h-[min(46vh,340px)] max-w-[320px] cursor-crosshair touch-none"
         />
 
         {/* Start Overlay */}
