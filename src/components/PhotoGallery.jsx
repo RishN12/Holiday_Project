@@ -12,7 +12,14 @@ export default function PhotoGallery() {
   const [selected, setSelected] = useState(null);
   const [cameraOpen, setCameraOpen] = useState(false);
   const [facingMode, setFacingMode] = useState('environment');
-  const [tip, setTip] = useState('Tap start camera for offline photo guidance.');
+  const [shotMode, setShotMode] = useState('landmark');
+  const [tip, setTip] = useState('Choose a shot style for simple, offline guidance.');
+
+  const shotGuidance = {
+    landmark: 'Keep the horizon level and place the landmark just off-center.',
+    portrait: 'Turn your subject toward soft light and leave space in front of them.',
+    food: 'Shoot from a slight angle and keep the plate near the center.',
+  };
 
   useEffect(() => setStorageItem(STORAGE_KEY, photos), [photos]);
   useEffect(() => () => streamRef.current?.getTracks().forEach((track) => track.stop()), []);
@@ -24,7 +31,7 @@ export default function PhotoGallery() {
       streamRef.current = stream;
       setCameraOpen(true);
       requestAnimationFrame(() => { if (videoRef.current) videoRef.current.srcObject = stream; });
-      setTip('Find the horizon and keep your subject slightly off-center.');
+      setTip(shotGuidance[shotMode]);
     } catch {
       setTip('Camera access is unavailable. You can still add photos from your device.');
     }
@@ -60,6 +67,12 @@ export default function PhotoGallery() {
   return (
     <section className="photo-gallery animate-fadeIn">
       <div className="section-heading"><div><p className="eyebrow">Capture & keep offline</p><h2>Smart camera</h2></div><button className="icon-button" onClick={() => inputRef.current?.click()} aria-label="Add photos"><ImagePlus size={18} /></button><input ref={inputRef} className="sr-only" type="file" accept="image/*" multiple onChange={addPhotos} /></div>
+      <div className="shot-presets" aria-label="Photo guidance style">
+        {Object.entries({ landmark: 'Landmark', portrait: 'Portrait', food: 'Food' }).map(([value, label]) => (
+          <button key={value} type="button" className={shotMode === value ? 'shot-preset active' : 'shot-preset'} onClick={() => { setShotMode(value); setTip(shotGuidance[value]); }} aria-pressed={shotMode === value}>{label}</button>
+        ))}
+      </div>
+      <p className="camera-coach-note"><Sparkles size={14} /> Smart coach runs on-device and stays available offline.</p>
       {cameraOpen ? (
         <div className="smart-camera" role="region" aria-label="Smart camera">
           <div className="camera-frame"><video ref={videoRef} autoPlay playsInline muted /><div className="camera-grid" aria-hidden="true" /><span className="camera-guide">{tip}</span></div>

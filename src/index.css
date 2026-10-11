@@ -120,7 +120,14 @@
 .icon-button { display: grid; place-items: center; width: 2.65rem; height: 2.65rem; border: 1px solid var(--line); border-radius: .9rem; background: var(--surface); color: var(--ink); }
 .gallery-empty { display: grid; justify-items: center; gap: .55rem; width: 100%; min-height: 12rem; padding: 2rem; border: 1px dashed var(--line); border-radius: 1.25rem; background: var(--surface); color: var(--ink2); text-align: center; }
 .gallery-empty strong { color: var(--ink); font-size: 1rem; }
-.gallery-empty span { max-width: 14rem; font-size: .78rem; line-height: 1.45; }
+  .gallery-empty span { max-width: 14rem; font-size: .78rem; line-height: 1.45; }
+  .shot-presets { display: flex; gap: .45rem; margin: 0 0 .55rem; overflow-x: auto; scrollbar-width: none; }
+  .shot-presets::-webkit-scrollbar { display: none; }
+  .shot-preset { flex: 0 0 auto; padding: .55rem .8rem; border: 1px solid var(--line); border-radius: .7rem; background: var(--surface); color: var(--ink2); font: inherit; font-size: .72rem; font-weight: 750; }
+  .shot-preset.active { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--surface)); color: var(--ink); }
+  .camera-coach-note { display: flex; align-items: center; gap: .4rem; margin: 0 0 .8rem; color: var(--ink2); font-size: .7rem; }
+  .camera-coach-note svg { color: var(--accent); flex: 0 0 auto; }
+
 .photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
 .photo-tile { aspect-ratio: 1; overflow: hidden; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); }
 .photo-tile img, .photo-lightbox img { width: 100%; height: 100%; object-fit: cover; }
