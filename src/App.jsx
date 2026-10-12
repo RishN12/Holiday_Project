@@ -7,7 +7,6 @@ import PackingList from './components/PackingList';
 import SpendingTracker from './components/SpendingTracker';
 import ArcadeHub from './components/InFlightArcade/ArcadeHub';
 import QRCodeModal from './components/QRCodeModal';
-import PhotoGallery from './components/PhotoGallery';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('itinerary');
