@@ -53,4 +53,3 @@ export default function FlightRush() {
     <button onClick={() => { setScore(0); setPlaying(false); setTimeLeft(current.time); }} className="mx-auto flex items-center gap-1 text-[11px] font-bold text-slate-500"><RotateCcw className="h-3 w-3" /> Reset attempt</button>
   </div>;
 }
-сныҧсны  
