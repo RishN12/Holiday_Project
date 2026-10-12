@@ -112,6 +112,44 @@
   .rocket-game .mt-2 { margin-top: .35rem; }
 }
 
+.home-page { padding: .45rem 0 1rem; }
+.home-welcome { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin: .2rem 0 1.1rem; }
+.home-welcome h2 { margin: 0; font-size: 1.65rem; letter-spacing: -.055em; line-height: 1.05; }
+.home-subtitle { margin: .45rem 0 0; color: var(--ink2); font-size: .75rem; line-height: 1.4; }
+.home-plane { display: grid; place-items: center; width: 3rem; height: 3rem; flex: 0 0 auto; border: 1px solid #38bdf833; border-radius: 1rem; background: #38bdf81c; color: var(--accent); transform: rotate(-12deg); }
+.home-plane svg { width: 1.3rem; height: 1.3rem; }
+.trip-countdown { display: flex; align-items: center; gap: .75rem; width: 100%; margin-bottom: 1.35rem; padding: .8rem; border: 1px solid #38bdf855; border-radius: 1.15rem; background: linear-gradient(135deg, #123044, var(--surface)); color: var(--ink); text-align: left; box-shadow: 0 12px 30px rgba(0,0,0,.16); }
+.trip-countdown:active, .home-shortcut:active, .home-footer-card button:active { transform: scale(.985); }
+.countdown-icon { display: grid; place-items: center; width: 2.65rem; height: 2.65rem; flex: 0 0 auto; border-radius: .85rem; background: var(--accent); color: #082f49; }
+.countdown-icon svg { width: 1.15rem; height: 1.15rem; }
+.countdown-copy { display: grid; gap: .12rem; flex: 1; min-width: 0; }
+.countdown-copy span, .home-section-row span { color: var(--accent); font-size: .62rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.countdown-copy strong { font-size: .95rem; }
+.countdown-copy small { color: #bae6fd; font-size: .68rem; }
+.countdown-arrow, .shortcut-arrow { width: 1rem; height: 1rem; color: var(--ink2); }
+.home-section-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: .65rem; }
+.home-section-row h3 { margin: 0; font-size: .95rem; letter-spacing: -.02em; }
+.home-shortcuts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }
+.home-shortcut { display: flex; align-items: center; gap: .5rem; min-width: 0; padding: .7rem .6rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); color: var(--ink); text-align: left; transition: transform .15s ease, border-color .15s ease; }
+.home-shortcut:hover { border-color: #38bdf866; }
+.shortcut-icon { display: grid; place-items: center; width: 2rem; height: 2rem; flex: 0 0 auto; border-radius: .65rem; }
+.shortcut-icon svg { width: 1rem; height: 1rem; }
+.shortcut-copy { display: grid; gap: .12rem; min-width: 0; flex: 1; }
+.shortcut-copy strong { overflow: hidden; font-size: .72rem; text-overflow: ellipsis; white-space: nowrap; }
+.shortcut-copy small { color: var(--ink2); font-size: .6rem; }
+.tone-blue .shortcut-icon { background: #38bdf81c; color: var(--accent); }
+.tone-green .shortcut-icon { background: #34d3991c; color: #34d399; }
+.tone-gold .shortcut-icon { background: #fbbf241c; color: #fbbf24; }
+.tone-purple .shortcut-icon { background: #c084fc1c; color: #c084fc; }
+.home-footer-card { display: flex; align-items: center; gap: .65rem; margin-top: .8rem; padding: .8rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); }
+.home-footer-icon { display: grid; place-items: center; width: 2.2rem; height: 2.2rem; flex: 0 0 auto; border-radius: .7rem; background: var(--surface2); color: var(--ink2); }
+.home-footer-icon svg { width: 1rem; height: 1rem; }
+.home-footer-card div:nth-child(2) { flex: 1; }
+.home-footer-card strong { font-size: .76rem; }
+.home-footer-card p { margin: .15rem 0 0; color: var(--ink2); font-size: .65rem; }
+.home-footer-card button { display: grid; place-items: center; width: 2rem; height: 2rem; border: 0; border-radius: .65rem; background: var(--surface2); color: var(--accent); }
+.home-footer-card button svg { width: .9rem; height: .9rem; }
+
 .photo-gallery { padding-bottom: 1rem; }
 .section-heading { display: flex; align-items: center; gap: .65rem; margin: .4rem 0 1rem; }
 .section-heading > div { flex: 1; }

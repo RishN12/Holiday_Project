@@ -7,9 +7,10 @@ import PackingList from './components/PackingList';
 import SpendingTracker from './components/SpendingTracker';
 import ArcadeHub from './components/InFlightArcade/ArcadeHub';
 import QRCodeModal from './components/QRCodeModal';
+import Home from './components/Home';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('itinerary');
+  const [activeTab, setActiveTab] = useState('home');
   const [isQrOpen, setIsQrOpen] = useState(false);
 
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <Header onOpenQR={() => setIsQrOpen(true)} />
 
       <main className="flex-1 w-full max-w-md mx-auto px-3 pb-28 pt-3 overflow-x-hidden">
+        {activeTab === 'home'       && <Home setActiveTab={setActiveTab} onOpenQR={() => setIsQrOpen(true)} />}
         {activeTab === 'itinerary'  && <Itinerary />}
         {activeTab === 'tip'        && <TipCalculator />}
         {activeTab === 'currency'   && <CurrencyConverter />}
