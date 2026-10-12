@@ -5,7 +5,8 @@ import FlightBrickBreaker from './FlightBrickBreaker';
 import JetpackRunner from './JetpackRunner';
 import FlightBingo from './FlightBingo';
 import FlightJournal from './FlightJournal';
-import { Gamepad2, Rocket, Layers, Zap, Sparkles, BookOpen, Lock, Check } from 'lucide-react';
+import FlightRush from './FlightRush';
+import { Gamepad2, Rocket, Layers, Zap, Sparkles, BookOpen, Lock, Check, Gauge } from 'lucide-react';
 import { getStorageItem, setStorageItem } from '../../utils/storage';
 
 const TABS = [
@@ -15,6 +16,7 @@ const TABS = [
   { id: 'runner',  label: 'Runner',   icon: Zap,       color: 'text-emerald-400' },
   { id: 'bingo',   label: 'Bingo',    icon: Sparkles,  color: 'text-purple-400' },
   { id: 'journal', label: 'Journal',  icon: BookOpen,  color: 'text-sky-300' },
+  { id: 'rush',    label: 'Rush',     icon: Gauge,    color: 'text-cyan-300' },
 ];
 
 export default function ArcadeHub() {
@@ -40,7 +42,7 @@ export default function ArcadeHub() {
             <Gamepad2 className="w-4 h-4 text-amber-400" />
             In-Flight Arcade
           </h2>
-          <p className="text-[10px] text-[var(--ink2)]">4 games · 100% offline · high scores saved</p>
+          <p className="text-[10px] text-[var(--ink2)]">6 games · 100% offline · levels and high scores saved</p>
         </div>
         <div className="text-[10px] font-bold text-amber-400 border border-amber-500/30 bg-amber-400/10 px-2 py-1 rounded-full">
           ✈ Airplane Mode OK
@@ -92,6 +94,7 @@ export default function ArcadeHub() {
         {tab === 'runner'  && <JetpackRunner />}
         {tab === 'bingo'   && <FlightBingo />}
         {tab === 'journal' && <FlightJournal />}
+        {tab === 'rush'    && <FlightRush />}
       </div>
     </div>
   );
