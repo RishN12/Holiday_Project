@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, CalendarDays, CheckCircle2, ChevronRight, Gamepad2, MapPin, Plane, Wallet } from 'lucide-react';
+import { ArrowRight, CalendarDays, CheckCircle2, ChevronRight, Gamepad2, MapPin, Plane, QrCode, Wallet } from 'lucide-react';
 
 const shortcuts = [
   { id: 'itinerary', label: 'Trip plan', detail: 'Your schedule', icon: CalendarDays, tone: 'blue' },
