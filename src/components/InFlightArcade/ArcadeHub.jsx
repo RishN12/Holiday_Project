@@ -42,7 +42,7 @@ export default function ArcadeHub() {
             <Gamepad2 className="w-4 h-4 text-amber-400" />
             In-Flight Arcade
           </h2>
-          <p className="text-[10px] text-[var(--ink2)]">6 games · 100% offline · levels and high scores saved</p>
+          <p className="text-[10px] text-[var(--ink2)]">7 games · 100% offline · levels and high scores saved</p>
         </div>
         <div className="text-[10px] font-bold text-amber-400 border border-amber-500/30 bg-amber-400/10 px-2 py-1 rounded-full">
           ✈ Airplane Mode OK
@@ -73,9 +73,9 @@ export default function ArcadeHub() {
 
       {tab === 'dodge' && (
         <div className="arcade-levels" aria-label="Rocket run levels">
-          <div className="flex items-center justify-between mb-2"><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ink2)]">Rocket run</span><span className="text-[10px] text-[var(--ink2)]">{unlockedLevel}/12 unlocked</span></div>
+          <div className="flex items-center justify-between mb-2"><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ink2)]">Rocket run</span><span className="text-[10px] text-[var(--ink2)]">{unlockedLevel}/20 unlocked</span></div>
           <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">
-            {Array.from({ length: 12 }, (_, index) => index + 1).map((item) => {
+            {Array.from({ length: 20 }, (_, index) => index + 1).map((item) => {
               const locked = item > unlockedLevel;
               const complete = item < unlockedLevel;
               return <button key={item} disabled={locked} onClick={() => { setLevel(item); setStorageItem('orlando_dodge_level_v1', item); }} className={`level-chip ${level === item ? 'level-chip-active' : ''} ${locked ? 'level-chip-locked' : ''}`} aria-label={`Level ${item}${locked ? ', locked' : ''}`}>

@@ -11,6 +11,11 @@ const LEVELS = [
   { target: 34, time: 10, label: 'Speed run' },
   { target: 42, time: 9, label: 'Supersonic' },
   { target: 50, time: 8, label: 'Final approach' },
+  { target: 58, time: 8, label: 'Mach one' },
+  { target: 67, time: 7, label: 'High altitude' },
+  { target: 77, time: 7, label: 'Cloud breaker' },
+  { target: 88, time: 6, label: 'Night flight' },
+  { target: 100, time: 6, label: 'Orlando arrival' },
 ];
 
 export default function FlightRush() {
