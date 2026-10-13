@@ -21,9 +21,39 @@ export default function Itinerary() {
   const [newTitle, setNewTitle] = useState('');
   const [newDetail, setNewDetail] = useState('');
 
+  const removePastDays = (days) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return days.filter((day) => {
+      const normalizedDate = day.fullDate.replace(/(\d+)(st|nd|rd|th)/i, '$1');
+      const parsedDate = new Date(normalizedDate);
+      parsedDate.setHours(0, 0, 0, 0);
+      return Number.isNaN(parsedDate.getTime()) || parsedDate >= today;
+    });
+  };
+
+  useEffect(() => {
+    setItinerary((current) => {
+      const upcoming = removePastDays(current);
+      return upcoming.length === current.length ? current : upcoming;
+    });
+
+    const timer = window.setInterval(() => {
+      setItinerary((current) => removePastDays(current));
+    }, 60 * 1000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
   useEffect(() => {
     setStorageItem(KEYS.ITINERARY, itinerary);
   }, [itinerary]);
+
+  useEffect(() => {
+    if (itinerary.length && !itinerary.some((day) => day.id === selectedDayId)) {
+      setSelectedDayId(itinerary[0].id);
+    }
+  }, [itinerary, selectedDayId]);
 
   const activeDay = itinerary.find((d) => d.id === selectedDayId) || itinerary[0];
 

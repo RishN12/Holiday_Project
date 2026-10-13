@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight, CalendarDays, CheckCircle2, ChevronRight, Gamepad2, MapPin, Plane, QrCode, Wallet } from 'lucide-react';
 
 const shortcuts = [
@@ -9,6 +9,28 @@ const shortcuts = [
 ];
 
 export default function Home({ setActiveTab, onOpenQR }) {
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 1000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const formatTime = (timeZone) => new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  }).format(now);
+
+  const formatDate = (timeZone) => new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  }).format(now);
+
   return (
     <section className="home-page animate-fadeIn" aria-labelledby="home-title">
       <div className="home-welcome">
@@ -18,6 +40,19 @@ export default function Home({ setActiveTab, onOpenQR }) {
           <p className="home-subtitle">Everything you need for a smoother week away.</p>
         </div>
         <div className="home-plane" aria-hidden="true"><Plane /></div>
+      </div>
+
+      <div className="home-time-grid" aria-label="Current local and UK time">
+        <div className="home-time-card home-time-local">
+          <span className="home-time-label">Florida time</span>
+          <strong>{formatTime('America/New_York')}</strong>
+          <small>{formatDate('America/New_York')} · Local</small>
+        </div>
+        <div className="home-time-card home-time-uk">
+          <span className="home-time-label">UK time</span>
+          <strong>{formatTime('Europe/London')}</strong>
+          <small>{formatDate('Europe/London')} · London</small>
+        </div>
       </div>
 
       <button className="trip-countdown" onClick={() => setActiveTab('itinerary')}>
