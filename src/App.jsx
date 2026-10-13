@@ -25,7 +25,7 @@ export default function App() {
         {activeTab === 'packing'    && <PackingList />}
         {activeTab === 'spending'   && <SpendingTracker />}
         {activeTab === 'arcade'     && <ArcadeHub />}
-        {activeTab === 'photos'     && <PhotoGallery />}
+
       </main>
 
       <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
