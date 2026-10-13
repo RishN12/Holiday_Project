@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, CalendarDays, CheckCircle2, ChevronRight, Gamepad2, MapPin, Plane, QrCode, Wallet } from 'lucide-react';
+import { ArrowRight, CalendarDays, CheckCircle2, ChevronRight, Gamepad2, MapPin, Plane, Wallet } from 'lucide-react';
 
 const shortcuts = [
   { id: 'itinerary', label: 'Trip plan', detail: 'Your schedule', icon: CalendarDays, tone: 'blue' },
@@ -8,7 +8,7 @@ const shortcuts = [
   { id: 'arcade', label: 'In-flight games', detail: 'Play offline', icon: Gamepad2, tone: 'purple' },
 ];
 
-export default function Home({ setActiveTab, onOpenQR }) {
+export default function Home({ setActiveTab }) {
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -70,11 +70,6 @@ export default function Home({ setActiveTab, onOpenQR }) {
         ))}
       </div>
 
-      <div className="home-footer-card">
-        <div className="home-footer-icon"><QrCode /></div>
-        <div><strong>Travel card ready</strong><p>Keep your important QR code one tap away.</p></div>
-        <button onClick={onOpenQR} aria-label="Open travel QR code"><ArrowRight /></button>
-      </div>
     </section>
   );
 }
