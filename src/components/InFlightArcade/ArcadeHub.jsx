@@ -26,7 +26,7 @@ export default function ArcadeHub() {
   const activeLevel = level;
 
   const completeLevel = (completed) => {
-    const next = Math.min(20, completed + 1);
+    const next = Math.min(25, completed + 1);
     setLevel(next);
     setStorageItem('orlando_dodge_level_v1', next);
     setUnlockedLevel((current) => {
@@ -38,6 +38,7 @@ export default function ArcadeHub() {
 
   return (
     <div className="flex flex-col gap-3 pb-24 pt-1 animate-fadeIn">
+      <div className="arcade-dashboard-shell">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -45,15 +46,17 @@ export default function ArcadeHub() {
             <Gamepad2 className="w-4 h-4 text-amber-400" />
             In-Flight Arcade
           </h2>
-          <p className="text-[10px] text-[var(--ink2)]">7 games · 100% offline · levels and high scores saved</p>
+          <p className="text-[10px] text-[var(--ink2)]">7 games · 100% offline · 25 levels each · high scores saved</p>
         </div>
         <div className="text-[10px] font-bold text-amber-400 border border-amber-500/30 bg-amber-400/10 px-2 py-1 rounded-full">
           ✈ Airplane Mode OK
         </div>
       </div>
 
+      <div className="arcade-stat-row"><div className="arcade-stat"><strong>25</strong><span>Levels</span></div><div className="arcade-stat"><strong>Offline</strong><span>Ready</span></div><div className="arcade-stat"><strong>Saved</strong><span>Progress</span></div></div>
+
       {/* Game tab pills - horizontally scrollable */}
-      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none snap-x">
+      <div className="arcade-tab-strip"><div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none snap-x">
         {TABS.map(t => {
           const Icon = t.icon;
           const active = tab === t.id;
@@ -72,14 +75,14 @@ export default function ArcadeHub() {
             </button>
           );
         })}
-      </div>
+      </div></div>
 
       <div className="arcade-game-card">
-        <div className="arcade-game-card-top"><div><span className="arcade-kicker">Now playing</span><strong>{TABS.find((item) => item.id === tab)?.label} challenge</strong></div><span className="arcade-level-count">Level {activeLevel} / 20</span></div>
-        <div className="arcade-progress-track"><span style={{ width: `${(activeLevel / 20) * 100}%` }} /></div>
+        <div className="arcade-game-card-top"><div><span className="arcade-kicker">Now playing</span><strong>{TABS.find((item) => item.id === tab)?.label} challenge</strong></div><span className="arcade-level-count">Level {activeLevel} / 25</span></div>
+        <div className="arcade-progress-track"><span style={{ width: `${(activeLevel / 25) * 100}%` }} /></div>
       </div>
 
-      <div className="arcade-auto-level-note" role="status"><span>Level {activeLevel} of 20</span><small>Finish the challenge to unlock the next level automatically.</small></div>
+      <div className="arcade-auto-level-note" role="status"><span>Level {activeLevel} of 25</span><small>Finish the challenge to unlock the next level automatically.</small></div>
 
       {/* Content */}
       <div className="mt-1">
@@ -90,6 +93,7 @@ export default function ArcadeHub() {
         {tab === 'bingo'   && <FlightBingo />}
         {tab === 'journal' && <FlightJournal />}
         {tab === 'rush'    && <FlightRush />}
+      </div>
       </div>
     </div>
   );
