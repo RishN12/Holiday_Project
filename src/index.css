@@ -111,6 +111,9 @@
 .arcade-level-count { color: var(--ink2); font-size: .65rem; font-weight: 800; white-space: nowrap; }
 .arcade-progress-track { height: .3rem; margin-top: .65rem; overflow: hidden; border-radius: 99px; background: var(--surface2); }
 .arcade-progress-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), #a78bfa); transition: width .2s ease; }
+.arcade-auto-level-note { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); }
+.arcade-auto-level-note span { color: var(--accent); font-size: .7rem; font-weight: 850; white-space: nowrap; }
+.arcade-auto-level-note small { color: var(--ink2); font-size: .62rem; line-height: 1.3; text-align: right; }
 
 .rocket-game { width: 100%; }
 .rocket-game .relative { width: min(100%, 320px); }
