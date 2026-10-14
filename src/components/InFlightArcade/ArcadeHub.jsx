@@ -46,14 +46,14 @@ export default function ArcadeHub() {
             <Gamepad2 className="w-4 h-4 text-amber-400" />
             In-Flight Arcade
           </h2>
-          <p className="text-[10px] text-[var(--ink2)]">7 games · 100% offline · 25 levels each · high scores saved</p>
+          <p className="text-[10px] text-[var(--ink2)]">7 games · 100% offline · high scores saved</p>
         </div>
         <div className="text-[10px] font-bold text-amber-400 border border-amber-500/30 bg-amber-400/10 px-2 py-1 rounded-full">
           ✈ Airplane Mode OK
         </div>
       </div>
 
-      <div className="arcade-stat-row"><div className="arcade-stat"><strong>25</strong><span>Levels</span></div><div className="arcade-stat"><strong>Offline</strong><span>Ready</span></div><div className="arcade-stat"><strong>Saved</strong><span>Progress</span></div></div>
+      <div className="arcade-stat-row"><div className="arcade-stat"><strong>Auto</strong><span>Progression</span></div><div className="arcade-stat"><strong>Offline</strong><span>Ready</span></div><div className="arcade-stat"><strong>Saved</strong><span>Progress</span></div></div>
 
       {/* Game tab pills - horizontally scrollable */}
       <div className="arcade-tab-strip"><div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none snap-x">
