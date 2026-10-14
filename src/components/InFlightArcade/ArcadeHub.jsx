@@ -26,7 +26,7 @@ export default function ArcadeHub() {
   const activeLevel = level;
 
   const completeLevel = (completed) => {
-    const next = Math.min(25, completed + 1);
+    const next = Math.min(30, completed + 1);
     setLevel(next);
     setStorageItem('orlando_dodge_level_v1', next);
     setUnlockedLevel((current) => {
@@ -78,11 +78,11 @@ export default function ArcadeHub() {
       </div></div>
 
       <div className="arcade-game-card">
-        <div className="arcade-game-card-top"><div><span className="arcade-kicker">Now playing</span><strong>{TABS.find((item) => item.id === tab)?.label} challenge</strong></div><span className="arcade-level-count">Level {activeLevel} / 25</span></div>
-        <div className="arcade-progress-track"><span style={{ width: `${(activeLevel / 25) * 100}%` }} /></div>
+        <div className="arcade-game-card-top"><div><span className="arcade-kicker">Now playing</span><strong>{TABS.find((item) => item.id === tab)?.label} challenge</strong></div><span className="arcade-level-count">Level {activeLevel} / 30</span></div>
+        <div className="arcade-progress-track"><span style={{ width: `${(activeLevel / 30) * 100}%` }} /></div>
       </div>
 
-      <div className="arcade-auto-level-note" role="status"><span>Level {activeLevel} of 25</span><small>Finish the challenge to unlock the next level automatically.</small></div>
+      <div className="arcade-auto-level-note" role="status"><span>Level {activeLevel} of 30</span><small>Finish the challenge to unlock the next level automatically.</small></div>
 
       {/* Content */}
       <div className="mt-1">

@@ -27,6 +27,11 @@ const LEVELS = [
   { target: 253, time: 3, label: 'Velocity peak' },
   { target: 275, time: 3, label: 'Beyond the clouds' },
   { target: 298, time: 3, label: 'Captain elite' },
+  { target: 322, time: 3, label: 'Cloud nine' },
+  { target: 347, time: 3, label: 'Jet legend' },
+  { target: 373, time: 2, label: 'Skyline sprint' },
+  { target: 400, time: 2, label: 'Terminal zero' },
+  { target: 428, time: 2, label: 'Arcade champion' },
 ];
 
 export default function FlightRush() {

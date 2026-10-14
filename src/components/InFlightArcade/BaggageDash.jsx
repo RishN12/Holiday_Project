@@ -11,7 +11,7 @@ const LEVELS = [
   ['Red-eye run', 15, 'Fast hands, sharp eyes.'],
   ['Final call', 18, 'One last push to the gate.'],
   ['Captain', 22, 'The ultimate baggage challenge.'],
-  ...Array.from({ length: 17 }, (_, index) => {
+  ...Array.from({ length: 22 }, (_, index) => {
     const level = index + 9;
     return [`Gate ${level}`, 22 + index * 2, level < 15 ? 'The carousel is speeding up.' : 'Elite baggage handling.'];
   }),
