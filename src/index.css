@@ -103,6 +103,14 @@
 .level-chip { display: inline-flex; align-items: center; justify-content: center; gap: .25rem; min-width: 2.15rem; height: 2rem; border: 1px solid var(--line); border-radius: .7rem; background: var(--surface2); color: var(--ink2); font-size: .72rem; font-weight: 800; }
 .level-chip-active { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 16%, var(--surface2)); color: var(--accent); }
 .level-chip-locked { opacity: .38; }
+.arcade-game-card { padding: .8rem .9rem; border: 1px solid var(--line); border-radius: 1rem; background: linear-gradient(135deg, var(--surface), var(--surface2)); box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+.arcade-game-card-top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.arcade-game-card-top > div { display: grid; gap: .12rem; }
+.arcade-kicker { color: var(--accent); font-size: .58rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.arcade-game-card-top strong { color: var(--ink); font-size: .88rem; }
+.arcade-level-count { color: var(--ink2); font-size: .65rem; font-weight: 800; white-space: nowrap; }
+.arcade-progress-track { height: .3rem; margin-top: .65rem; overflow: hidden; border-radius: 99px; background: var(--surface2); }
+.arcade-progress-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), #a78bfa); transition: width .2s ease; }
 
 .rocket-game { width: 100%; }
 .rocket-game .relative { width: min(100%, 320px); }

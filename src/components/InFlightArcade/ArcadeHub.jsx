@@ -23,9 +23,21 @@ export default function ArcadeHub() {
   const [tab, setTab] = useState('dodge');
   const [level, setLevel] = useState(() => getStorageItem('orlando_dodge_level_v1', 1));
   const [unlockedLevel, setUnlockedLevel] = useState(() => getStorageItem('orlando_dodge_unlocked_v1', 1));
+  const [gameLevels, setGameLevels] = useState(() => getStorageItem('orlando_arcade_levels_v2', {}));
+  const activeProgress = gameLevels[tab] || { selected: 1, unlocked: 1 };
+  const activeLevel = tab === 'dodge' ? level : activeProgress.selected;
+
+  const selectGameLevel = (value) => {
+    if (value > activeProgress.unlocked) return;
+    setGameLevels((current) => {
+      const next = { ...current, [tab]: { ...activeProgress, selected: value } };
+      setStorageItem('orlando_arcade_levels_v2', next);
+      return next;
+    });
+  };
 
   const completeLevel = (completed) => {
-    const next = Math.min(12, completed + 1);
+    const next = Math.min(20, completed + 1);
     setUnlockedLevel((current) => {
       const unlocked = Math.max(current, next);
       setStorageItem('orlando_dodge_unlocked_v1', unlocked);
@@ -71,6 +83,11 @@ export default function ArcadeHub() {
         })}
       </div>
 
+      <div className="arcade-game-card">
+        <div className="arcade-game-card-top"><div><span className="arcade-kicker">Now playing</span><strong>{TABS.find((item) => item.id === tab)?.label} challenge</strong></div><span className="arcade-level-count">Level {activeLevel} / 20</span></div>
+        <div className="arcade-progress-track"><span style={{ width: `${(activeLevel / 20) * 100}%` }} /></div>
+      </div>
+
       {tab === 'dodge' && (
         <div className="arcade-levels" aria-label="Rocket run levels">
           <div className="flex items-center justify-between mb-2"><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ink2)]">Rocket run</span><span className="text-[10px] text-[var(--ink2)]">{unlockedLevel}/20 unlocked</span></div>
@@ -85,6 +102,8 @@ export default function ArcadeHub() {
           </div>
         </div>
       )}
+
+      {tab !== 'dodge' && <div className="arcade-levels" aria-label={`${TABS.find((item) => item.id === tab)?.label} levels`}><div className="flex items-center justify-between mb-2"><span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--ink2)]">Challenge levels</span><span className="text-[10px] text-[var(--ink2)]">{activeProgress.unlocked}/20 unlocked</span></div><div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1">{Array.from({ length: 20 }, (_, index) => index + 1).map((item) => { const locked = item > activeProgress.unlocked; return <button key={item} disabled={locked} onClick={() => selectGameLevel(item)} className={`level-chip ${activeLevel === item ? 'level-chip-active' : ''} ${locked ? 'level-chip-locked' : ''}`} aria-label={`Level ${item}${locked ? ', locked' : ''}`}>{locked ? <Lock size={11} /> : item}</button>; })}</div></div>}
 
       {/* Content */}
       <div className="mt-1">
