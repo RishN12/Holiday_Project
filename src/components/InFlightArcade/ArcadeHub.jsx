@@ -42,11 +42,8 @@ export default function ArcadeHub() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-base font-extrabold text-white flex items-center gap-2">
-            <Gamepad2 className="w-4 h-4 text-amber-400" />
-            In-Flight Arcade
-          </h2>
-          <p className="text-[10px] text-[var(--ink2)]">7 games · 100% offline · high scores saved</p>
+          <div className="arcade-title-row"><span className="arcade-brand-mark"><Gamepad2 /></span><div><span className="arcade-eyebrow">Terminal 07 / Offline</span><h2>In-Flight Arcade</h2></div></div>
+          <p className="arcade-subtitle">7 games <span>•</span> 100% offline <span>•</span> high scores saved</p>
         </div>
         <div className="text-[10px] font-bold text-amber-400 border border-amber-500/30 bg-amber-400/10 px-2 py-1 rounded-full">
           ✈ Airplane Mode OK
@@ -64,14 +61,12 @@ export default function ArcadeHub() {
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
-              className={`snap-start shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold border transition-all duration-150 ${
-                active
-                  ? 'bg-[var(--surface2)] border-[var(--accent)] text-white shadow-md'
-                  : 'bg-[var(--surface)] border-[var(--line)] text-[var(--ink2)] hover:text-white'
-              }`}
+              className={`arcade-tab snap-start shrink-0 ${active ? 'arcade-tab-active' : ''}`}
+              aria-current={active ? 'page' : undefined}
             >
-              <Icon className={`w-3.5 h-3.5 ${active ? t.color : ''}`} />
-              {t.label}
+              <span className={`arcade-tab-icon ${active ? t.color : ''}`}><Icon /></span>
+              <span>{t.label}</span>
+              {active && <i aria-hidden="true" />}
             </button>
           );
         })}
