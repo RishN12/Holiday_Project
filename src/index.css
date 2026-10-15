@@ -113,8 +113,11 @@
 .arcade-game-card-top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
 .arcade-game-card-top > div { display: grid; gap: .12rem; }
 .arcade-kicker { color: var(--accent); font-size: .58rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
-.arcade-game-card-top strong { color: var(--ink); font-size: .88rem; }
-.arcade-level-count { color: var(--ink2); font-size: .65rem; font-weight: 800; white-space: nowrap; }
+.arcade-game-card-top strong { color: var(--ink); font-size: .9rem; letter-spacing: -.02em; }
+.arcade-game-meta { display: block; margin-top: .2rem; color: var(--ink2); font-size: .5rem; font-weight: 800; letter-spacing: .08em; }
+.arcade-game-meta span { color: var(--accent); padding: 0 .15rem; }
+.arcade-level-count { display: inline-flex; align-items: baseline; gap: .12rem; color: var(--accent); font-size: .72rem; font-weight: 900; white-space: nowrap; }
+.arcade-level-count small { color: var(--ink2); font-size: .55rem; font-weight: 700; }
 .arcade-progress-track { height: .3rem; margin-top: .65rem; overflow: hidden; border-radius: 99px; background: var(--surface2); }
 .arcade-progress-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), #a78bfa); transition: width .2s ease; }
 .arcade-auto-level-note { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .6rem .7rem; border: 1px solid #ffffff12; border-radius: .75rem; background: #00000018; }
@@ -135,8 +138,19 @@
 .arcade-stat { display: grid; gap: .12rem; padding: .55rem; border: 1px solid var(--line); border-radius: .8rem; background: #00000018; }
 .arcade-stat strong { color: var(--ink); font-size: .85rem; }
 .arcade-stat span { color: var(--ink2); font-size: .58rem; font-weight: 750; text-transform: uppercase; letter-spacing: .08em; }
-.arcade-tab-strip { margin: .85rem 0 .3rem; padding: .3rem; border: 1px solid #ffffff12; border-radius: 1rem; background: #00000020; box-shadow: inset 0 1px #ffffff08; }
-.arcade-tab { position: relative; display: inline-flex; align-items: center; gap: .4rem; height: 2.35rem; padding: 0 .72rem; border: 1px solid transparent; border-radius: .75rem; background: transparent; color: var(--ink2); font-size: .68rem; font-weight: 850; transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease; }
+.arcade-marquee { position: relative; display: grid; gap: .12rem; min-height: 4.35rem; margin: -.35rem -.25rem .85rem; padding: .75rem .8rem .55rem; overflow: hidden; border: 1px solid #fbbf2440; border-radius: .85rem; background: linear-gradient(105deg, #f59e0b18, #7c3aed18 52%, #06b6d41c); text-align: center; box-shadow: inset 0 0 24px #fbbf2410, 0 0 24px #38bdf80d; }
+.arcade-marquee::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0, transparent 13px, #ffffff05 14px); pointer-events: none; }
+.marquee-lights { display: flex; justify-content: center; gap: .48rem; margin-bottom: .1rem; }
+.marquee-lights i { width: .28rem; height: .28rem; border-radius: 50%; background: #fbbf24; box-shadow: 0 0 8px #fbbf24; animation: arcade-blink 1.8s ease-in-out infinite; }
+.marquee-lights i:nth-child(2), .marquee-lights i:nth-child(4) { animation-delay: .4s; }
+.marquee-lights i:nth-child(3) { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; animation-delay: .8s; }
+.marquee-label, .marquee-code { color: #fde68a; font-size: .48rem; font-weight: 900; letter-spacing: .17em; }
+.arcade-marquee strong { position: relative; z-index: 1; color: #fff7ed; font-size: .9rem; letter-spacing: .1em; text-shadow: 0 0 14px #f59e0b88; }
+.marquee-code { color: #67e8f9; }
+@keyframes arcade-blink { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+.arcade-tab-strip { margin: .85rem 0 .3rem; padding: .35rem; border: 1px solid #ffffff18; border-radius: 1rem; background: #0000002e; box-shadow: inset 0 1px #ffffff08; }
+.arcade-tab-strip > div { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .3rem; overflow: visible; padding: 0; }
+.arcade-tab { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .32rem; min-width: 0; height: 2.3rem; padding: 0 .25rem; border: 1px solid transparent; border-radius: .68rem; background: transparent; color: var(--ink2); font-size: .62rem; font-weight: 850; transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease; }
 .arcade-tab:active { transform: scale(.95); }
 .arcade-tab:hover { color: var(--ink); }
 .arcade-tab-active { border-color: #38bdf844; background: linear-gradient(135deg, #38bdf81c, #a78bfa12); color: var(--ink); box-shadow: 0 5px 16px #0000001f; }

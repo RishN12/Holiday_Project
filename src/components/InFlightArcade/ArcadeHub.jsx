@@ -39,6 +39,7 @@ export default function ArcadeHub() {
   return (
     <div className="flex flex-col gap-3 pb-24 pt-1 animate-fadeIn">
       <div className="arcade-dashboard-shell">
+      <div className="arcade-marquee"><div className="marquee-lights" aria-hidden="true"><i /><i /><i /><i /><i /></div><span className="marquee-label">ORLANDO AIRPORT ARCADE</span><strong>PLAY OFFLINE. FLY HIGH.</strong><span className="marquee-code">INSERT FUN</span></div>
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -73,7 +74,7 @@ export default function ArcadeHub() {
       </div></div>
 
       <div className="arcade-game-card">
-        <div className="arcade-game-card-top"><div><span className="arcade-kicker">Now playing</span><strong>{TABS.find((item) => item.id === tab)?.label} challenge</strong></div><span className="arcade-level-count">Level {activeLevel} / 30</span></div>
+        <div className="arcade-game-card-top"><div><span className="arcade-kicker">Now playing</span><strong>{TABS.find((item) => item.id === tab)?.label} challenge</strong><small className="arcade-game-meta">CONTINUE RUN <span>•</span> HIGH SCORE MODE</small></div><span className="arcade-level-count">LVL {activeLevel}<small>/30</small></span></div>
         <div className="arcade-progress-track"><span style={{ width: `${(activeLevel / 30) * 100}%` }} /></div>
       </div>
 
