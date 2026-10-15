@@ -39,7 +39,9 @@ export default function Itinerary() {
     });
 
     const timer = window.setInterval(() => {
-      setItinerary((current) => removePastDays(current));
+      if (document.visibilityState === 'visible') {
+        setItinerary((current) => removePastDays(current));
+      }
     }, 60 * 1000);
 
     return () => window.clearInterval(timer);

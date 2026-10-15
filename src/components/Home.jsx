@@ -12,8 +12,23 @@ export default function Home({ setActiveTab }) {
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
-    const timer = window.setInterval(() => setNow(new Date()), 1000);
-    return () => window.clearInterval(timer);
+    let timer;
+    const updateClock = () => setNow(new Date());
+    const startClock = () => {
+      window.clearInterval(timer);
+      updateClock();
+      timer = window.setInterval(updateClock, 1000);
+    };
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') startClock();
+      else window.clearInterval(timer);
+    };
+    startClock();
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
   }, []);
 
   const formatTime = (timeZone) => new Intl.DateTimeFormat('en-GB', {
