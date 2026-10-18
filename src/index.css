@@ -209,6 +209,13 @@
 .countdown-copy strong { font-size: .95rem; }
 .countdown-copy small { color: #bae6fd; font-size: .68rem; }
 .countdown-arrow, .shortcut-arrow { width: 1rem; height: 1rem; color: var(--ink2); }
+.install-card { display: flex; align-items: center; gap: .6rem; margin: .8rem 0; padding: .7rem; border: 1px solid #38bdf833; border-radius: 1rem; background: linear-gradient(135deg, #38bdf80d, var(--surface)); }
+.install-card-icon { display: grid; place-items: center; width: 2rem; height: 2rem; flex: 0 0 auto; border-radius: .65rem; background: #38bdf81c; color: var(--accent); }
+.install-card-icon svg { width: 1rem; height: 1rem; }
+.install-card > div { flex: 1; min-width: 0; }
+.install-card strong { font-size: .72rem; }
+.install-card p { margin: .15rem 0 0; color: var(--ink2); font-size: .61rem; line-height: 1.35; }
+.install-card button { padding: .45rem .6rem; border: 0; border-radius: .55rem; background: var(--accent); color: #082f49; font-size: .62rem; font-weight: 900; }
 .home-section-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: .65rem; }
 .home-section-row h3 { margin: 0; font-size: .95rem; letter-spacing: -.02em; }
 .home-shortcuts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, CalendarDays, CheckCircle2, ChevronRight, Gamepad2, MapPin, Plane, QrCode, Wallet } from 'lucide-react';
+import { ArrowRight, CalendarDays, CheckCircle2, ChevronRight, Download, Gamepad2, MapPin, Plane, Wallet } from 'lucide-react';
 
 const shortcuts = [
   { id: 'itinerary', label: 'Trip plan', detail: 'Your schedule', icon: CalendarDays, tone: 'blue' },
@@ -10,6 +10,33 @@ const shortcuts = [
 
 export default function Home({ setActiveTab }) {
   const [now, setNow] = useState(() => new Date());
+  const [installPrompt, setInstallPrompt] = useState(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+
+  useEffect(() => {
+    const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    setIsInstalled(standalone);
+    const handleInstallPrompt = (event) => {
+      event.preventDefault();
+      setInstallPrompt(event);
+    };
+    const handleInstalled = () => {
+      setIsInstalled(true);
+      setInstallPrompt(null);
+    };
+    window.addEventListener('beforeinstallprompt', handleInstallPrompt);
+    window.addEventListener('appinstalled', handleInstalled);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleInstallPrompt);
+      window.removeEventListener('appinstalled', handleInstalled);
+    };
+  }, []);
+
+  const installApp = async () => {
+    if (!installPrompt) return;
+    await installPrompt.prompt();
+    setInstallPrompt(null);
+  };
 
   useEffect(() => {
     let timer;
@@ -75,6 +102,8 @@ export default function Home({ setActiveTab }) {
         <div className="countdown-copy"><span>Next up</span><strong>Orlando, Florida</strong><small>Check your itinerary and travel details</small></div>
         <ChevronRight className="countdown-arrow" />
       </button>
+
+      {!isInstalled && <div className="install-card"><span className="install-card-icon"><Download /></span><div><strong>Install for offline use</strong><p>{installPrompt ? 'Add Orlando Trip to your home screen.' : 'Use your browser menu and choose “Add to Home Screen”.'}</p></div>{installPrompt && <button onClick={installApp}>Install</button>}</div>}
 
       <div className="home-section-row"><h3>Quick access</h3><span>Offline ready</span></div>
       <div className="home-shortcuts">
