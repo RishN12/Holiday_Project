@@ -103,7 +103,7 @@ export default function Home({ setActiveTab }) {
         <ChevronRight className="countdown-arrow" />
       </button>
 
-      {!isInstalled && <div className="install-card"><span className="install-card-icon"><Download /></span><div><strong>Install for offline use</strong><p>{installPrompt ? 'Add Orlando Trip to your home screen.' : 'Use your browser menu and choose “Add to Home Screen”.'}</p></div>{installPrompt && <button onClick={installApp}>Install</button>}</div>}
+      <div className="install-card"><span className="install-card-icon"><Download /></span><div><strong>{isInstalled ? 'Orlando Trip is installed' : 'Install for offline use'}</strong><p>{isInstalled ? 'You can open it from your home screen anytime.' : installPrompt ? 'Add Orlando Trip to your home screen.' : 'Use your browser menu and choose “Add to Home Screen”.'}</p></div>{installPrompt && !isInstalled && <button onClick={installApp}>Install</button>}</div>
 
       <div className="home-section-row"><h3>Quick access</h3><span>Offline ready</span></div>
       <div className="home-shortcuts">
