@@ -4,14 +4,16 @@ export const INITIAL_ITINERARY = [
     date: "Wed 21st Oct",
     fullDate: "Wednesday 21st October 2026",
     title: "Flight to Florida & Arrival",
-    location: "London Heathrow ✈️ Tampa Airport 🏨 Best Western Cocoa Beach",
+    location: "London Heathrow Terminal 3 → Charlotte → Jacksonville → Cocoa Beach",
     category: "flight",
     icon: "Plane",
-    summary: "Depart from London Heathrow and arrive at Tampa Airport. Transfer to hotel: Best Western, Cocoa Beach",
+    summary: "Meet at Heathrow, fly to Jacksonville, then transfer to Cocoa Beach.",
     activities: [
-      { time: "Morning", title: "Flight Departure from LHR", detail: "Depart from London Heathrow (LHR) on long-haul flight to Tampa, Florida." },
-      { time: "Afternoon", title: "Touchdown at Tampa Airport (TPA)", detail: "Pass through US immigration/border control, collect baggage." },
-      { time: "Evening", title: "Transfer to Cocoa Beach Hotel", detail: "Coach transfer to Best Western, Cocoa Beach. Check-in, grab dinner & get a good night's rest for NASA tomorrow!" }
+      { time: "06:00", title: "Meet at Heathrow Terminal 3", detail: "Students should be dropped at Terminal 3. Meet in the American Airlines zone." },
+      { time: "09:15", title: "Flight to Charlotte", detail: "American Airlines flight AA0731. This is a 9-hour flight." },
+      { time: "15:58", title: "Flight to Jacksonville", detail: "Local time. American Airlines flight AA3129, a 1.5-hour connection." },
+      { time: "Evening", title: "Transfer to the first hotel", detail: "Two-hour journey to the first hotel with a dinner stop. Dinner is covered by student cash." },
+      { time: "21:30", title: "Check in and rest", detail: "Arrive at Best Western Cocoa Beach and prepare for day 2." }
     ],
     tips: "Keep passport, ESTA document, school emergency contact, and phone charger in your flight carry-on.",
     hotel: "Best Western, Cocoa Beach"
@@ -20,15 +22,16 @@ export const INITIAL_ITINERARY = [
     id: "day-2",
     date: "Thu 22nd Oct",
     fullDate: "Thursday 22nd October 2026",
-    title: "Rocketry Workshop at NASA KSC",
+    title: "Kennedy Space Center",
     location: "Kennedy Space Center, Merritt Island, FL",
     category: "nasa",
     icon: "Rocket",
-    summary: "Full day Rocketry Workshop at Kennedy Space Center",
+    summary: "Astronaut training, KSC exploration, and an evening guest talk.",
     activities: [
-      { time: "08:30", title: "Departure to Kennedy Space Center", detail: "Coach drive from Cocoa Beach to KSC." },
-      { time: "09:30 - 16:30", title: "Hands-on Rocketry Workshop", detail: "Design, build, and launch model rockets while learning orbital mechanics and rocket engine fundamentals." },
-      { time: "Evening", title: "Group Dinner at Cocoa Beach", detail: "Debrief and relax near Cocoa Beach pier." }
+      { time: "07:00", title: "Buffet breakfast at the hotel", detail: "Breakfast before the day at Kennedy Space Center." },
+      { time: "Morning", title: "Astronaut training experience", detail: "Take part in the scheduled astronaut training experience." },
+      { time: "Afternoon", title: "Explore Kennedy Space Center", detail: "Explore KSC and stop for lunch. Students should purchase lunch at their own expense." },
+      { time: "Evening", title: "Dinner and guest speaker", detail: "Buffet dinner by Fish Camp Grill followed by a talk with guest speaker Robert Katz." }
     ],
     tips: "Sunscreen, comfortable walking shoes, refillable water bottle, and notebook for workshop physics calculations.",
     hotel: "Best Western, Cocoa Beach"
@@ -37,15 +40,16 @@ export const INITIAL_ITINERARY = [
     id: "day-3",
     date: "Fri 23rd Oct",
     fullDate: "Friday 23rd October 2026",
-    title: "NASA Kennedy Space Center Exploration",
+    title: "Kennedy Space Center",
     location: "Kennedy Space Center Visitors Complex",
     category: "nasa",
     icon: "Compass",
-    summary: "Full day at Kennedy Space Center: Explore exhibits and various areas",
+    summary: "Explore the key KSC exhibits and finish with an evening in Cocoa Beach.",
     activities: [
-      { time: "09:00", title: "KSC Bus Tour & Saturn V Center", detail: "See active launch pads 39A/39B and stand underneath the massive Saturn V moon rocket." },
-      { time: "12:00", title: "Space Shuttle Atlantis & Hubbell Exhibit", detail: "Experience the real Space Shuttle Atlantis suspended in mid-air and Shuttle Launch Experience simulator." },
-      { time: "15:00", title: "Astronaut Encounter & IMAX Theater", detail: "Meet a real NASA astronaut and watch 3D space film." }
+      { time: "07:00", title: "Buffet breakfast at the hotel", detail: "Breakfast before returning to Kennedy Space Center." },
+      { time: "Daytime", title: "Explore the KSC", detail: "See Space Shuttle Atlantis, Saturn V Rocket, Rocket Garden, and the Shuttle Launch Experience." },
+      { time: "Lunch", title: "Lunch stop", detail: "Students purchase lunch at their own expense." },
+      { time: "Evening", title: "Explore Cocoa Beach", detail: "Visit Cocoa Beach hot spots, Westgate Pier, and Ron Jon's, the world's largest surf shop." }
     ],
     tips: "Bring power bank for photos and cash/card for NASA souvenir store!",
     hotel: "Best Western, Cocoa Beach"
@@ -54,15 +58,17 @@ export const INITIAL_ITINERARY = [
     id: "day-4",
     date: "Sat 24th Oct",
     fullDate: "Saturday 24th October 2026",
-    title: "Astronaut Training Experience & Orlando Transfer",
-    location: "ATX Center KSC 🚌 Rosen Inn at Pointe, International Drive",
-    category: "nasa",
+    title: "Rocketry and Robotics Workshop",
+    location: "Florida Film and STEM Academy → Rosen Inn at Pointe",
+    category: "tech",
     icon: "Award",
-    summary: "Astronaut Training Experience at Kennedy Space Center. Evening transfer to Rosen Inn at Pointe",
+    summary: "Workshop day, Florida Mall shopping, and the move to the second hotel.",
     activities: [
-      { time: "09:00 - 15:30", title: "Astronaut Training Experience (ATX)", detail: "Train for Mars exploration! Perform simulated spacewalks in microgravity trainers & pilot Mars lander simulators." },
-      { time: "16:30", title: "Hotel Transfer to Orlando", detail: "Check out of Cocoa Beach and transfer coach to Rosen Inn at Pointe on International Drive." },
-      { time: "19:30", title: "International Drive Dinner & Free Time", detail: "Explore I-Drive area, dinner with group." }
+      { time: "06:00", title: "Buffet breakfast at the hotel", detail: "Breakfast before checking out." },
+      { time: "Morning", title: "Check out and travel to Florida Film and STEM Academy", detail: "Board the coach for the 1.5-hour journey." },
+      { time: "09:00 - 14:00", title: "Rocketry and Robotics workshop", detail: "Lunch will be provided during the workshop." },
+      { time: "Afternoon", title: "Florida Mall shopping", detail: "Visit Florida Mall for shopping." },
+      { time: "Evening", title: "Check in and dinner", detail: "Check in at Rosen Inn @ Pointe Orlando and have pre-ordered dinner at Jojo's Shake House." }
     ],
     tips: "Wear closed-toe athletic sneakers for ATX simulators!",
     hotel: "Rosen Inn at Pointe, Orlando"
@@ -71,15 +77,15 @@ export const INITIAL_ITINERARY = [
     id: "day-5",
     date: "Sun 25th Oct",
     fullDate: "Sunday 25th October 2026",
-    title: "Universal Studios & Islands of Adventure",
+    title: "Universal Studios and Islands of Adventure",
     location: "Universal Parks Orlando",
     category: "park",
     icon: "Sparkles",
-    summary: "Full day at Universal Parks",
+    summary: "A full day exploring both Universal parks.",
     activities: [
-      { time: "08:30", title: "Arrival at Universal Orlando", detail: "Enter Wizarding World of Harry Potter (Diagon Alley & Hogsmeade via Hogwarts Express)." },
-      { time: "12:30", title: "VelociCoaster & Hulk Coaster Rush", detail: "High speed thrill rides at Islands of Adventure." },
-      { time: "17:00", title: "Universal Studios & CityWalk Dinner", detail: "Transformers, Revenge of the Mummy, and dinner on Universal CityWalk." }
+      { time: "Morning", title: "Buffet breakfast at the hotel", detail: "Breakfast before heading to the parks." },
+      { time: "All day", title: "Explore Islands of Adventure and Universal Studios", detail: "Meeting points will be organised throughout the day." },
+      { time: "Dinner", title: "Dinner with food vouchers", detail: "Food vouchers are worth $30 and may be used at any point during the day." }
     ],
     tips: "Pack light string bag, phone lanyard, and portable charger. Water rides will get you wet!",
     hotel: "Rosen Inn at Pointe, Orlando"
@@ -88,16 +94,18 @@ export const INITIAL_ITINERARY = [
     id: "day-6",
     date: "Mon 26th Oct",
     fullDate: "Monday 26th October 2026",
-    title: "i-Fly, Full Sail University & Departure Flight",
-    location: "i-Fly Indoor Skydiving 🎓 Full Sail University ✈️ Airport",
+    title: "iFly and Full Sail University",
+    location: "iFly → Full Sail University → Orlando Airport",
     category: "tech",
     icon: "Zap",
-    summary: "i-Fly Experience and Full Sail University visit, followed by shopping before departing for return flight",
+    summary: "iFly, Full Sail University, luggage collection, and the return flight.",
     activities: [
-      { time: "09:30", title: "i-Fly Indoor Skydiving", detail: "Bodyflight indoor skydiving wind tunnel experience!" },
-      { time: "11:30", title: "Full Sail University Campus Tour", detail: "Tour world-class audio, gaming, visual arts, and media production labs." },
-      { time: "14:30", title: "Orlando Premium Outlets Shopping", detail: "Final souvenir and gift shopping on International Drive." },
-      { time: "18:00", title: "Airport Transfer & Departure Flight", detail: "Head to airport for overnight flight back home to London." }
+      { time: "07:00", title: "Buffet breakfast at the hotel", detail: "Breakfast before the final activity day." },
+      { time: "Morning", title: "iFly workshop and activity", detail: "Take part in the scheduled iFly experience." },
+      { time: "Afternoon", title: "Full Sail University guided tour", detail: "Visit Full Sail University before returning to the hotel." },
+      { time: "Later", title: "Collect luggage and choose lunch", detail: "Return to the hotel to collect luggage. Lunch options are nearby." },
+      { time: "17:54", title: "Flight to Charlotte", detail: "Orlando to Charlotte, flight AA2227." },
+      { time: "21:15", title: "Flight to London Heathrow", detail: "Charlotte to London Heathrow, flight AA0732." }
     ],
     tips: "Have passport and customs declaration ready. Dress comfortably for overnight flight.",
     hotel: "In Flight (Overnight)"

@@ -4,6 +4,8 @@ export const DEFAULT_PACKING_ITEMS = [
   { id: "p2", category: "Documents & Essentials", name: "US Dollars Cash ($50-$150)", checked: false, essential: true },
   { id: "p3", category: "Documents & Essentials", name: "UK Debit/Travel Card", checked: false, essential: true },
   { id: "p4", category: "Documents & Essentials", name: "School Emergency Contact Info", checked: false, essential: true },
+  { id: "p4b", category: "Documents & Essentials", name: "Printed itinerary and flight details", checked: false, essential: true },
+  { id: "p4c", category: "Documents & Essentials", name: "Student cash for lunches and souvenirs", checked: false, essential: true },
 
   // Electronics
   { id: "p5", category: "Electronics", name: "US Travel Adapter Plug (Type A/B)", checked: false, essential: true },
@@ -22,6 +24,7 @@ export const DEFAULT_PACKING_ITEMS = [
   { id: "p14", category: "Theme Park & Sun Care", name: "Rain Poncho / Light Waterproof", checked: false, essential: false },
   { id: "p15", category: "Theme Park & Sun Care", name: "Small Lightweight Daypack / String Bag", checked: false, essential: true },
   { id: "p16", category: "Theme Park & Sun Care", name: "Ticket Lanyard / Pouch", checked: false, essential: false },
+  { id: "p16b", category: "Theme Park & Sun Care", name: "Waterproof phone pouch", checked: false, essential: false },
 
   // Clothing
   { id: "p17", category: "Clothing", name: "Light T-Shirts (5-6)", checked: false, essential: true },
@@ -36,5 +39,7 @@ export const DEFAULT_PACKING_ITEMS = [
   { id: "p24", category: "Flight & Toiletries", name: "Toothbrush & Travel Toothpaste", checked: false, essential: true },
   { id: "p25", category: "Flight & Toiletries", name: "Deodorant & Skincare", checked: false, essential: true },
   { id: "p26", category: "Flight & Toiletries", name: "Hand Sanitizer & Lip Balm", checked: false, essential: true },
-  { id: "p27", category: "Flight & Toiletries", name: "Blister Plasters / Compeed", checked: false, essential: false }
+  { id: "p27", category: "Flight & Toiletries", name: "Blister Plasters / Compeed", checked: false, essential: false },
+  { id: "p28", category: "Flight & Toiletries", name: "Travel sickness tablets", checked: false, essential: false },
+  { id: "p29", category: "Flight & Toiletries", name: "Small laundry bag", checked: false, essential: false }
 ];

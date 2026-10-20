@@ -20,8 +20,8 @@ export const setStorageItem = (key, value) => {
 
 // Storage Keys Constants
 export const KEYS = {
-  ITINERARY: 'orlando_itinerary_v1',
-  PACKING: 'orlando_packing_v1',
+  ITINERARY: 'orlando_itinerary_v2',
+  PACKING: 'orlando_packing_v2',
   SPENDING: 'orlando_spending_v1',
   RATE: 'orlando_usd_gbp_rate_v1',
   BINGO: 'orlando_bingo_v1',
